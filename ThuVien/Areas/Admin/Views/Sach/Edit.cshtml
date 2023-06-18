@@ -1,0 +1,273 @@
+﻿@model ThuVien.Models.sach
+@{
+    ViewBag.Title = "Cập nhật sách";
+}
+
+
+@section naviheader{
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/home" class="nav-link">Trang chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/sach" class="nav-link">Sách</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">Cập nhật</a>
+        </li>
+    </ul>
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>@ViewBag.Title</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Sách</a></li>
+                    <li class="breadcrumb-item active">@ViewBag.Title</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Thông tin Sách</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="bs-stepper-content">
+                @using (Html.BeginForm("Edit", "Sach", FormMethod.Post, new { }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(x => x.masach)
+                    <!-- your steps content here -->
+                    <div id="logins-part" class="content active dstepper-block" role="tabpanel" aria-labelledby="logins-part-trigger">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Tên sách</label>
+                            @Html.TextBoxFor(x => x.tensach, new { @class = "form-control", @placeholder = "TenSach" })
+                            @Html.ValidationMessageFor(x => x.tensach, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputFile">Ảnh</label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    @Html.TextBoxFor(x => x.anh, new { @id = "txtImage", @class = "form-control" })
+                                </div>
+                                <div class="input-group-append">
+                                    <input type="button" value="Tải ảnh" onclick="BrowseServer('txtImage');" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="selectedTheLoaisHidden" name="selectedTheLoais" />
+                        <div class="form-group">
+                            <label>Thể loại</label>
+                            <select id="selectedTheLoais" name="selectedTheLoais" multiple="multiple">
+                                @foreach (var item in (IEnumerable<SelectListItem>)ViewBag.list_TheLoai)
+                                {
+                                    <option value="@item.Value" @(Array.IndexOf(ViewBag.selectedTheLoais, item.Value) >= 0 ? "selected" : "")>@item.Text</option>
+                                }
+                            </select>
+                        </div>
+
+                        <input type="hidden" id="selectedTacGiaHidden" name="selectedTacGia" />
+                        <div class="form-group">
+                            <label>Tác giả</label>
+                            <select id="selectedTacGia" name="selectedTacGia" multiple="multiple">
+                                @foreach (var item in (IEnumerable<SelectListItem>)ViewBag.list_TacGia)
+                                {
+                                    <option value="@item.Value" @(Array.IndexOf(ViewBag.selectedTacGia, item.Value) >= 0 ? "selected" : "")>@item.Text</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">NXB</label>
+                            <select name="selectedNXB" class="form-control">
+                                @foreach (var item in ViewBag.NXB as IEnumerable<SelectListItem>)
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+                                }
+                            </select>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Mô tả</label>
+                            @Html.TextAreaFor(x => x.mieuta, new { @class = "form-control" })
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Năm XB</label>
+                            @Html.TextBoxFor(x => x.namxb, new { @class = "form-control" })
+                        </div>
+
+                        @*<div class="form-group">
+                    <label for="exampleInputPassword1">Số trang</label>
+                    @Html.TextBoxFor(x => x.sotrang, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Giá bìa</label>
+                    @Html.TextBoxFor(x => x.giabia, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Số lượng</label>
+                    @Html.TextAreaFor(x => x.soluong, new { @class = "form-control" })
+                </div>*@
+
+
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Số trang</label>
+                                    @Html.TextBoxFor(x => x.sotrang, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.sotrang, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Giá bìa</label>
+                                    <input type="text" name="demoPrice" value="@Model.giabia" id="demoPrice" class="form-control auto" data-a-dec="," data-a-sep=".">
+                                    @Html.HiddenFor(x => x.giabia, new { @class = "", @placeholder = "Giá bìa" })
+                                    @Html.ValidationMessageFor(x => x.giabia, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Số lượng</label>
+                                    @Html.TextBoxFor(x => x.soluong, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.soluong, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Hiển thị</label>
+                            @Html.CheckBoxFor(x => x.TrangThai, new { @checked = "@checked" })
+                        </div>
+
+                        <div class="form-group">
+                            <a href="/admin/sach" class="btn btn-danger">Quay lại</a>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+
+                }
+            </div>
+            <!-- /.card-body -->
+            <!-- /.card -->
+
+</section>
+<!-- /.content -->
+<!-- /.content-wrapper -->
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            CKEDITOR.replace('txtDetail', {
+                customConfig: '/content/ckeditor/config.js',
+                extraAllowedContent: 'span',
+            });
+
+            $('.auto').autoNumeric('init');
+            $('#demoPrice').bind('blur focusout keypress keyup', function () {
+                var demoGet = $('#demoPrice').autoNumeric('get');
+                $('#Price').val(demoGet);
+                $('#Price').autoNumeric('set', demoGet);
+            });
+         
+        });
+        function BrowseServer(field) {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (fileUrl) {
+                document.getElementById(field).value = fileUrl;
+            };
+            finder.popup();
+        }
+
+        ////Initialize Select2 Elements
+
+        $(function () {
+            // Date picker for start date
+            $('#startdate').datetimepicker({
+                format: 'L',
+                icons: {
+                    time: 'far fa-clock',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-chevron-up',
+                    down: 'fa fa-chevron-down',
+                    previous: 'fa fa-chevron-left',
+                    next: 'fa fa-chevron-right',
+                    today: 'fa fa-calendar-check-o',
+                    clear: 'fa fa-trash',
+                    close: 'fa fa-times'
+                }
+            });
+
+            // Date picker for end date
+            $('#enddate').datetimepicker({
+                format: 'L',
+                icons: {
+                    time: 'far fa-clock',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-chevron-up',
+                    down: 'fa fa-chevron-down',
+                    previous: 'fa fa-chevron-left',
+                    next: 'fa fa-chevron-right',
+                    today: 'fa fa-calendar-check-o',
+                    clear: 'fa fa-trash',
+                    close: 'fa fa-times'
+                }
+            });
+
+            $(function () {
+                $('#selectedTheLoais').select2({
+                    theme: 'bootstrap4',
+                    placeholder: 'Select a State',
+                    width: '100%'
+                });
+                $('#selectedTacGia').select2({
+                    theme: 'bootstrap4',
+                    placeholder: 'Select a State',
+                    width: '100%'
+                });
+            });
+
+
+
+        });
+
+    </script>
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/Content/clients/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="~/Content/clients/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+}

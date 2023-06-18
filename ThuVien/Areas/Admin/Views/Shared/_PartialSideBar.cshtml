@@ -1,0 +1,142 @@
+﻿<!-- Sidebar -->
+<div class="sidebar">
+    <!-- Sidebar user (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+            <img src="~/Content/clients/dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+            <a href="#" class="d-block">Admin</a>
+        </div>
+    </div>
+
+    <!-- SidebarSearch Form -->
+    <!--<div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+            <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+            <div class="input-group-append">
+                <button class="btn btn-sidebar">
+                    <i class="fas fa-search fa-fw"></i>
+                </button>
+            </div>
+        </div>
+    </div>-->
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+    with font-awesome or any other icon font library -->
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fab fa-accusoft"></i>
+                    <p>
+                        Quản lý Thư Viện
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="/admin/sach" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Quản lý sách</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin/theloai" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Danh sách thể loại</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-table"></i>
+                    <p>
+                        Quản lý Mượn Sách
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="/admin/phieumuon" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Quản lí phiếu mượn</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="@Url.Action("ListOrder","PhieuMuon")" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Phiếu đợi duyệt</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin/phieumuon" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Phiếu chưa trả</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a href="/admin/docgia" class="nav-link">
+                    <i class="fas fa-book-reader"></i>
+                    <p>
+                        Độc giả
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/admin/tacgia" class="nav-link">
+                    <i class="fas fa-pen-fancy"></i>
+                    <p>
+                        Tác giả
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/admin/role" class="nav-link">
+                    <i class="fas fa-cogs"></i>
+                    <p>
+                        Role
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/admin/account" class="nav-link">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <p>
+                        Tài khoản
+                        @*<span class="right badge badge-danger">New</span>*@
+                    </p>
+                </a>
+            </li>
+            @if (Request.IsAuthenticated)
+            {
+                <li class="nav-item">
+                    <a href="javascript:document.getElementById('logOffForm').submit()" class="nav-link">
+                        <i class="fas fa-arrow-left"></i>
+                        <p>
+                            Đăng xuất
+                            @*<span class="right badge badge-danger">New</span>*@
+                        </p>
+                    </a>
+                </li>
+
+                <div style="display:none">
+                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { @id = "logOffForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                    }
+                </div>
+            }
+
+
+
+        </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+</div>
+<!-- /.sidebar -->
