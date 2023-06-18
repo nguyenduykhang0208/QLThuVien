@@ -69,6 +69,9 @@
                     @Html.HiddenFor(x => x.Id)
                     @Html.HiddenFor(x => x.UserName)
                     @Html.HiddenFor(x => x.Email)
+                    @Html.HiddenFor(x => x.PasswordHash)
+                    @Html.HiddenFor(x => x.SecurityStamp)
+                    @Html.HiddenFor(x => x.LockoutEnabled)
                     <!-- your steps content here -->
                 <div id="logins-part" class="content active dstepper-block" role="tabpanel" aria-labelledby="logins-part-trigger">
                     <div class="form-group">

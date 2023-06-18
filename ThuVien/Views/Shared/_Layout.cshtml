@@ -1,139 +1,237 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Thư Viện</title>
+    <title>@ViewBag.Title</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Oxygen:400,700" rel="stylesheet">
-
-    <link rel="stylesheet" href="~/assets/css/Review/animate.css">
-    <link rel="stylesheet" href="~/assets/css/Review/owl.carousel.min.css">
-    <link rel="stylesheet" href="~/assets/css/Review/jquery.fancybox.min.css">
-
-    <link rel="stylesheet" href="~/assets/ionicons/css/ionicons.min.css">
-    <link rel="stylesheet" href="~/assets/fontawesome/css/font-awesome.min.css">
-
-    <!-- Theme Style -->
-    <link rel="stylesheet" href="~/assets/css/Review/style.css">
-
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Colo Shop Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/bootstrap4/bootstrap.min.css">
+    <link href="~/Content/assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+    <link rel="canonical" href="https://www.ten_mien_cua_cac_ban/" />
+    <meta name="robots" content="index,follow,noodp" />
+    <meta name="robots" content="noarchive">
+    <meta property="og:site_name" content="Thư viện" />
+    <meta property="og:type" content="Website" />
+    <meta property="og:locale" content="vi_VN" />
+    <meta property="og:url" itemprop="url" content="https://www.ten_mien_cua_cac_ban/" />
+    <meta content="https://cdn.24h.com.vn/upload/2-2018/images/2018-06-14/logo-chan-trang-24h.png" property="og:image" itemprop="thumbnailUrl" />
+    <!--script_breadcrum-->
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/responsive.css">
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
 </head>
-
 <body>
+    <div class="super_container">
 
-    <header role="banner" style="background-color: dodgerblue; ">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand " href="~/PageReview/Home/Index">LIBRARY</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+        <!-- Header -->
 
-                <div class="collapse navbar-collapse" id="navbarsExample05">
-                    <ul class="navbar-nav pl-md-5 ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link " href="~/home/index">Trang chủ</a>
-                        </li>
+        <header class="header trans_300">
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="~/book/index">Sản phẩm</a>
-                        </li>
+            <!-- Top Navigation -->
 
-                        <li class="nav-item">
-                            <a class="nav-link " href="#about">Thông tin</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#contact">Liên hệ</a>
-                        </li>
+            <div class="top_nav">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="top_nav_left">Hotline: 0123938445</div>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <div class="top_nav_right">
+                                <ul class="top_nav_menu">
 
-                    </ul>
+                                    <!--Language / My Account -->
 
+                                 
+                                    <li class="language">
+                                        <a href="#">
+                                            English
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                        <ul class="language_selection">
+                                            <li><a href="#">French</a></li>
+                                            <li><a href="#">Italian</a></li>
+                                            <li><a href="#">German</a></li>
+                                            <li><a href="#">Spanish</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="account">
+                                        @if (!Request.IsAuthenticated)
+                                        {
+                                            <a href="#">
+                                                My Account
+                                                <i class="fa fa-angle-down"></i>
+                                            </a>
+                                            <ul class="account_selection">
+                                                <li><a href="/account/login"><i class="fa fa-sign-in" aria-hidden="true"></i>Sign In</a></li>
+                                                <li><a href="/account/Register"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
+                                            </ul>
+                                        }
+                                        else
+                                        {
+                                            <a href="#">
+                                                Welcome: @User.Identity.Name
+                                                <i class="fa fa-angle-down"></i>
+                                            </a>
+                                            <ul class="account_selection">
+                                                <li><a href="/"><i class="fa fa-sign-in" aria-hidden="true"></i>Profile</a></li>
+                                                <li><a href="javascript:document.getElementById('logOffForm').submit()"><i class="fa fa-user-plus" aria-hidden="true"></i> Logout</a></li>
+                                            </ul>
+                                        }
 
+                                    </li>
+                                </ul>
+
+                                @if (Request.IsAuthenticated)
+                                {
+                                    <div style="display:none">
+                                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { @id = "logOffForm" }))
+                                        {
+                                            @Html.AntiForgeryToken()}
+                                    </div>}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
 
 
-    <div class="top-shadow"></div>
+            <!-- Main Navigation -->
 
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-
-
-        <div class="page-content">
-
-            @RenderBody()
-
-            <footer class="site-footer" role="contentinfo">
+            <div class="main_nav_container">
                 <div class="container">
-                    <div style="font-family: Arial" class="row mb-5" id="about">
-                        <div class="col-md-4 mb-5">
-                            <h3 style="font-family: Arial">Thông tin đồ án</h3>
-                            <p class="mb-2">Khoa: Hệ thống thông tin</p>
-                            <p class="mb-2">Tên dự án : Quản lý thư viện</p>
-                            <p class="mb-2">GV: Mai Xuân Hùng</p>
-                            <ul class="list-unstyled footer-link d-flex footer-social">
-                                <li><a href="#" class="p-2"><span class="fa fa-twitter"></span></a></li>
-                                <li><a href="https://www.facebook.com/xuanhung.mai" class="p-2"><span class="fa fa-facebook"></span></a></li>
-                                <li><a href="#" class="p-2"><span class="fa fa-linkedin"></span></a></li>
-                                <li><a href="#" class="p-2"><span class="fa fa-instagram"></span></a></li>
-                            </ul>
-
-                        </div>
-                        <div style="font-family: Arial" class="col-md-5 mb-5 pl-md-5" id="contact">
-                            <h3 style="font-family: Arial">Thông tin liên hệ</h3>
-                            <ul class="list-unstyled footer-link">
-                                <li class="d-block">
-                                    <span class="d-block">Địa chỉ:</span>
-                                    <span>Khu phố 6, P.Linh Trung, Q.Thủ Đức, Tp.Hồ Chí Minh.</span>
-                                </li>
-                                <li class="d-block"><span class="d-block">Số điện thoại:</span><span>0981249458 || 0914469424</span></li>
-                                <li class="d-block"><span class="d-block">Email:</span><span>canhlong1430@gmail.com</span></li>
-                            </ul>
-                        </div>
-
-                        <div style="font-family: Arial" class="col-md-3">
-                            <h3 style="font-family: Arial"> Thành viên </h3>
-                            <ul class="list-unstyled footer-link">
-                                <li class="d-block">Bùi Cảnh Long </li>
-                                <li class="d-block">Lê Võ Đình Kha</li>
-                                <li class="d-block">Nguyễn Thái Hòa</li>
-                                <li class="d-block">Phan Vĩnh Khoa</li>
-                            </ul>
-                            <ul class="list-unstyled footer-link d-flex footer-social">
-                                <li><a href="https://www.facebook.com/long.canh.338" class="p-2"><span class="fa fa-facebook"> CL</span></a></li>
-                                <li><a href="https://www.facebook.com/lekhapkt2000" class="p-2"><span class="fa fa-facebook"> DK</span></a></li>
-                                <li><a href="https://www.facebook.com/aohngth" class="p-2"><span class="fa fa-facebook"> TH</span></a></li>
-                                <li><a href="https://www.facebook.com/VinhKhoa190920" class="p-2"><span class="fa fa-facebook"> VK</span></a></li>
-                            </ul>
-                        </div>
-
-                    </div>
                     <div class="row">
-                        <div class="col-12 text-md-center text-left">
-                            <p>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                Copyright by BCL ||
-                                <script>document.write(new Date().getFullYear());</script> All rights reserved
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            </p>
+                        <div class="col-lg-12 text-right">
+                            <div class="logo_container">
+                                <a href="/">Libra<span>ry</span></a>
+                            </div>
+                            <nav class="navbar">
+                                <ul class="navbar_menu">
+                                    <li><a href="/home">Trang chủ</a></li>
+                                    <li><a href="/book">Sản phẩm</a></li>
+                                    <li><a href="#">Liên hệ</a></li>
+                                    <li><a href="#">Tin tức</a></li>
+                                </ul>
+                                <ul class="navbar_user">
+                                    <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                                    <li class="checkout">
+                                        <a href="/gio-hang">
+                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                            <span id="checkout_items" class="checkout_items">0</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="hamburger_container">
+                                    <i class="fa fa-bars" aria-hidden="true"></i>
+                                </div>
+                            </nav>
                         </div>
                     </div>
                 </div>
-            </footer>
+            </div>
+
+        </header>
+
+        <div class="fs_menu_overlay"></div>
+        <div class="hamburger_menu">
+            <div class="hamburger_close"><i class="fa fa-times" aria-hidden="true"></i></div>
+            <div class="hamburger_menu_content text-right">
+                <ul class="menu_top_nav">
+                    <li class="menu_item has-children">
+                        <a href="#">
+                            English
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="menu_selection">
+                            <li><a href="#">French</a></li>
+                            <li><a href="#">Italian</a></li>
+                            <li><a href="#">German</a></li>
+                            <li><a href="#">Spanish</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu_item has-children">
+                        <a href="#">
+                            My Account
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="menu_selection">
+                            <li><a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i>Sign In</a></li>
+                            <li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu_item"><a href="#">home</a></li>
+                    <li class="menu_item"><a href="#">shop</a></li>
+                    <li class="menu_item"><a href="#">promotion</a></li>
+                    <li class="menu_item"><a href="#">pages</a></li>
+                    <li class="menu_item"><a href="#">blog</a></li>
+                    <li class="menu_item"><a href="#">contact</a></li>
+                </ul>
+            </div>
         </div>
+        @RenderBody()
+
+
+
+        <!-- Footer -->
+
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
+                            <ul class="footer_nav">
+                                <li><a href="#">Tin tức</a></li>
+                                <li><a href="#">FAQs</a></li>
+                                <li><a href="contact.html">Liên hệ</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="footer_nav_container">
+                            <div class="cr">©2023 All Rights Reserverd. Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="#">Colorlib</a> &amp; distributed by <a href="https://themewagon.com">ThemeWagon</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
     </div>
-    <div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#f4b214" /></svg></div>
 
-    <script src="~/assets/js/Review/jquery-3.2.1.min.js"></script>
-    <script src="~/assets/js/Review/popper.min.js"></script>
-    <script src="~/assets/js/Review/bootstrap.min.js"></script>
-    <script src="~/assets/js/Review/owl.carousel.min.js"></script>
-    <script src="~/assets/js/Review/jquery.waypoints.min.js"></script>
-    <script src="~/assets/js/Review/jquery.fancybox.min.js"></script>
-    <script src="~/assets/js/Review/main.js"></script>
 
-    <script src="~/assets/js/Review/main.js"></script>
+    @*@Scripts.Render("~/bundles/jquery")*@
+
+
+    <script src="~/Content/assets/styles/bootstrap4/popper.js"></script>
+    <script src="~/Content/assets/styles/bootstrap4/bootstrap.min.js"></script>
+    <script src="~/Content/assets/plugins/Isotope/isotope.pkgd.min.js"></script>
+    <script src="~/Content/assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="~/Content/assets/plugins/easing/easing.js"></script>
+    <script src="~/Content/assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+    <script src="~/Content/assets/js/custom.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+    <script src="~/Scripts/jsShopping.js"></script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>
