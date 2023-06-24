@@ -31,7 +31,10 @@ namespace ThuVien.Models
 
         public bool trangthaiduyet { get; set; }
         public bool trangthaitra { get; set; }
+        public bool tuchoi { get; set; }
 
+        [StringLength(2000)]
+        public string lydotuchoi { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<chitietmuon> chitietmuons { get; set; }
 

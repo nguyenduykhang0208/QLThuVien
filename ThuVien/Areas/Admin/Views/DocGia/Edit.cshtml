@@ -68,7 +68,6 @@
                     @Html.ValidationSummary(true)
                     @Html.HiddenFor(x => x.Id)
                     @Html.HiddenFor(x => x.UserName)
-                    @Html.HiddenFor(x => x.Email)
                     @Html.HiddenFor(x => x.PasswordHash)
                     @Html.HiddenFor(x => x.SecurityStamp)
                     @Html.HiddenFor(x => x.LockoutEnabled)
@@ -85,17 +84,22 @@
                         @Html.ValidationMessageFor(x => x.FullName, null, new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
+                        <label for="exampleInputEmail1">Email</label>
+                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "Email" })
+                        @Html.ValidationMessageFor(x => x.Email, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
                         <label for="gioitinh">Giới tính</label>
                         @Html.DropDownListFor(x => x.gioitinh, ViewBag.GioiTinhList as SelectList, "Chọn giới tính", new { @class = "form-control" })
                         @Html.ValidationMessageFor(x => x.gioitinh, null, new { @class = "text-danger" })
                     </div>
 
 
-                
+
                     <div class="form-group">
                         <label for="exampleInputEmail1">Số ĐT</label>
                         @Html.TextBoxFor(x => x.Phone, new { @class = "form-control", @placeholder = "SDT" })
-                        @Html.ValidationMessageFor(x => x.Phone, null, new { @class = "text-danger" })    
+                        @Html.ValidationMessageFor(x => x.Phone, null, new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Địa chỉ</label>

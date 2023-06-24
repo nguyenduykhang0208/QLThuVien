@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ThuVien.Models.ViewModels.CartItem>
+
+<table class="table">
+    <tr class="text-center">
+        <th>STT</th>
+        <th>Ảnh</th>
+        <th>Tên sách</th>
+        <th>Thể loại</th>
+
+        <th style="width:100px;">Số lượng</th>
+    </tr>
+    @if (Model != null && Model.Any())
+    {
+        var i = 0;
+      
+        foreach (var item in Model)
+        {
+         
+            <tr class="text-center" id="trow_@item.masach">
+                <td>@(i+1)</td>
+                <td><img src="@item.anh" width="60" /></td>
+                <td>
+                    <a href="/book/detail/@item.masach">
+                        @item.tensach
+                    </a>
+                </td>
+                <td>@item.tensach</td>
+                <td><input type="number" class="form-control" id="Quantity_@item.masach" value="@item.soluong" /></td>
+               
+                <td>
+                    <a href="/book/detail/@item.masach" data-id="@item.masach" class="btn btn-sm btn-outline-info">Chi tiết</a>
+                    <a href="#" data-id="@item.masach" class="btn btn-sm btn-danger btnDelete">Xóa</a>
+                    @*<a href="" data-id="@item.masach" class="btn btn-sm btn-success btnUpdate">Chi tiết</a>*@
+
+                </td>
+            </tr>
+            i++;
+        }
+    }
+    else
+    {
+        <tr>
+            <th colspan="7">Không có cuốn sách nào!!</th>
+        </tr>
+    }
+</table>
+

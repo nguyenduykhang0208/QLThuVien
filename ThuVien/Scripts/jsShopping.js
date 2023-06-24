@@ -11,7 +11,7 @@
         
         //alert(id + " " + quatity);
         $.ajax({
-            url: '/shoppingcart/addtocart',
+            url: '/cart/addtocart',
             type: 'POST',
             data: { id: id, quantity: quatity },
             success: function (rs) {
@@ -45,7 +45,7 @@
         var conf = confirm('Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?');
         if (conf == true) {
             $.ajax({
-                url: '/shoppingcart/Delete',
+                url: '/cart/Delete',
                 type: 'POST',
                 data: { id: id },
                 success: function (rs) {
@@ -65,7 +65,7 @@
 
 function ShowCount() {
     $.ajax({
-        url: '/shoppingcart/ShowCount',
+        url: '/cart/ShowCount',
         type: 'GET',
         success: function (rs) {
             $('#checkout_items').html(rs.Count);
@@ -74,7 +74,7 @@ function ShowCount() {
 }
 function DeleteAll() {
     $.ajax({
-        url: '/shoppingcart/DeleteAll',
+        url: '/cart/DeleteAll',
         type: 'POST',
         success: function (rs) {
             if (rs.Success) {
@@ -85,7 +85,7 @@ function DeleteAll() {
 }
 function Update(id,quantity) {
     $.ajax({
-        url: '/shoppingcart/Update',
+        url: '/cart/Update',
         type: 'POST',
         data: { id: id, quantity: quantity },
         success: function (rs) {
@@ -98,7 +98,7 @@ function Update(id,quantity) {
 
 function LoadCart() {
     $.ajax({
-        url: '/shoppingcart/Partial_Item_Cart',
+        url: '/cart/Partial_Item_Cart',
         type: 'GET',
         success: function (rs) {
             $('#load_data').html(rs);

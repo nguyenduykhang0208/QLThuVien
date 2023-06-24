@@ -12,7 +12,12 @@ namespace ThuVien
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            routes.MapRoute(
+                name: "CheckOut",
+                url: "thanh-toan",
+                defaults: new { controller = "Cart", action = "CheckOut", alias = UrlParameter.Optional },
+                namespaces: new[] { "ThuVien.Controllers" }
+             );
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

@@ -14,8 +14,14 @@ namespace ThuVien.Controllers
         // GET: Book
         public ActionResult Index()
         {
-            List<sach> sachList = db.saches.ToList();
+            List<sach> sachList = db.saches.Where(x => x.TrangThai).ToList();
             return View(sachList);
+        }
+
+        public ActionResult Detail(int id)
+        {
+            var item = db.saches.Find(id);
+            return View(item);
         }
     }
 }

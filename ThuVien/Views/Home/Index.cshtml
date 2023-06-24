@@ -3,73 +3,125 @@
 }
 
 <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
-<!-- Slider -->
-<style>
-    .news_section_container {
-        margin-top: 180px;
-    }
-
-    .row-item-new {
-        margin-bottom: 20px;
-    }
-
-    .title-news {
-        font-size: 24px;
-        border-bottom: 1px solid;
-        padding: 15px 0;
-        margin-bottom: 25px;
-    }
-
-    .img-box img {
-        max-width: 100%;
-        max-height: 100%;
-    }
-</style>
-<div class="container news_section_container">
-    <div class="row row-item-new">
-        <div class="col-md-3">
-            <div class="img-box">
-                <img src="~/Content/assets/images/lib.jpg" />
-            </div>
+<section class="home_banner">
+        <div class="carousel">
+            <img  class="carousel__img" src="~/Content/assets/images/home.jpg"/>
+            <button class="carousel__previous-btn">
+                <i class="ti-angle-left"></i>
+            </button>
+            <button class="carousel__next-btn">
+                <i class="ti-angle-right"></i>
+            </button>
         </div>
-        <div class="col-md-9">
-            <div class="content-box">
-                <h3>Sản phẩm</h3>
-                <div class="description-box">
-                    <p>Sách có thể ít đi một chút, nhưng phải tốt đẹp hơn. Không nên đặt một cuốn sách tầm thường lên giá sách.</p>
 
+    <div class="row">
+        <div class="col-md-6 col-lg-4 element-animate fadeInUp element-animated">
+            <div class="media block-6 d-block text-center">
+                <div class="icon mb-3"><span class="ion-bookmark text-primary"></span></div>
+
+                <div class="media-body">
+                    <h3 class="heading">Chất lượng</h3>
+                    <p>Sách có thể ít đi một chút, nhưng phải tốt đẹp hơn. Không nên đặt một cuốn sách tầm thường lên giá sách.</p>
                 </div>
             </div>
+
         </div>
-    </div>
-    <div class="row row-item-new">
-        <div class="col-md-3">
-            <div class="img-box">
-                <img src="~/Content/assets/images/reader.jpg" />
-            </div>
-        </div>
-        <div class="col-md-9">
-            <div class="content-box">
-                <h3>Thân thiện</h3>
-                <div class="description-box">
+        <div class="col-md-6 col-lg-4 element-animate fadeInUp element-animated">
+            <div class="media block-6 d-block text-center">
+                <div class="icon mb-3"><span class="ion-heart text-primary"></span></div>
+                <div class="media-body">
+                    <h3 class="heading">Thân thiện với Độc giả</h3>
                     <p>Thư viện trường học là hữu ích cho tất cả mọi người cho dù học sinh, giáo viên hoặc bất kỳ nhân viên khác.</p>
                 </div>
             </div>
+
         </div>
-    </div>
-    <div class="row row-item-new">
-        <div class="col-md-3">
-            <div class="img-box">
-                <img src="~/Content/assets/images/knowledge.jpg" />
-            </div>
-        </div>
-        <div class="col-md-9">
-            <div class="content-box">
-                <h3>Nhiều thông tin</h3>
-                <div class="description-box">
+        <div class="col-md-6 col-lg-4 element-animate fadeInUp element-animated">
+            <div class="media block-6 d-block text-center">
+                <div class="icon mb-3"><span class="ion-leaf text-primary"></span></div>
+                <div class="media-body">
+                    <h3 class="heading">Đa dạng</h3>
                     <p>Nguồn tài liệu phong phú,lối kiến trúc độc đáo gợi cho người đọc cảm giác đi vào núi sách.</p>
                 </div>
             </div>
+
         </div>
     </div>
-</div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const carouselImg = query(".carousel__img");
+        const carouselPreviousBtn = query(".carousel__previous-btn");
+        const carouselNextBtn = query(".carousel__next-btn");
+
+        const img = [
+            "home.jpg",
+            "banner.jpg",
+            "knowledge.jpg",
+            "lib.jpg",
+            "reader.jpg",
+        ];
+
+        let id = 1;
+        let intervalId;
+        let lastClickTime = 0;
+        function setSrcForImg(id) {
+            carouselImg.classList.remove("carousel--animate");
+            setTimeout(() => {
+                carouselImg.classList.add("carousel--animate");
+            }, 0);
+            setTimeout(() => {
+                carouselImg.src = `./Content/assets/images/${img[id]}`;
+            }, 550);
+        }
+
+        function startCarousel() {
+            intervalId = setInterval(() => {
+                id++;
+                if (id >= img.length) {
+                    id = 0;
+                }
+                setSrcForImg(id);
+            }, 5000);
+        }
+
+        function stopCarousel() {
+            clearInterval(intervalId);
+        }
+
+        startCarousel();
+
+        function block550ms(callback) {
+            const currentTime = new Date().getTime();
+            if (currentTime - lastClickTime > 550) {
+                callback();
+                stopCarousel();
+                startCarousel();
+                lastClickTime = currentTime;
+            }
+        }
+
+        carouselPreviousBtn.addEventListener("click", () => {
+            block550ms(() => {
+                id--;
+                if (id < 0) {
+                    id = img.length - 1;
+                }
+
+                setSrcForImg(id);
+            });
+        });
+
+        carouselNextBtn.addEventListener("click", () => {
+            block550ms(() => {
+                id++;
+                if (id >= img.length) {
+                    id = 0;
+                }
+                setSrcForImg(id);
+            });
+        });
+
+    });
+</script>

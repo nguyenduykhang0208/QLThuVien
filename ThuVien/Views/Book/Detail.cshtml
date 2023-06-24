@@ -1,0 +1,85 @@
+﻿@model ThuVien.Models.sach
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/single_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/single_responsive.css">
+@if (Model != null)
+{
+
+    var theloai = Model.theloais.Select(tl => tl.tentheloai);
+    var chuoiTL = string.Join(", ", theloai);
+    var tacgia = Model.tacgias.Select(tg => tg.tentacgia);
+    var chuoiTG = string.Join(", ", tacgia);
+    <div class="container single_product_container">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="single_product_pics">
+                    <div class="row">
+                        <div class="col-lg-9 image_col order-lg-2 order-1">
+                            <div class="single_product_image">
+                                <div class="single_product_image_background" style="background-image:url(@Model.anh)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="col-lg-5">
+                <div class="product_details">
+                    <div class="product_details_title">
+                        <h4>@Model.tensach</h4>
+                        <p><strong>Tác giả:</strong> @chuoiTG</p>
+                        <p><strong>Nhà xuất bản:</strong>  @Model.nhaxuatban.tennxb.ToString()</p>
+                        <p><strong>Thể loại:</strong> @chuoiTL</p>
+                        <p><strong>Số lượng:</strong>  @Model.soluong</p>
+                    </div>
+                    <div class="product_price"><p><strong>Giá bìa:</strong></p> @ThuVien.Models.Common.Common.FormatNumber(Model.giabia, 0)</div>
+                    <div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
+                        <span>Quantity:</span>
+                        <div class="quantity_selector">
+                            <span class="minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                            <span id="quantity_value">1</span>
+                            <span class="plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                        </div>
+                        <div class="red_button add_to_cart_button"><a href="#" class="btnAddToCart" data-id="@Model.masach">Đăng kí mượn</a></div>
+                        <div class="product_favorite d-flex flex-column align-items-center justify-content-center"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="tabs_section_container">
+
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="tabs_container">
+                        <ul class="tabs d-flex flex-sm-row flex-column align-items-left align-items-md-center justify-content-center">
+                            <li class="tab active" data-active-tab="tab_1"><span>Description</span></li>
+                            <li class="tab" data-active-tab="tab_2"><span>Additional Information</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+
+                    <!-- Tab Description -->
+
+                    <div id="tab_1" class="tab_container active">
+                        <div class="row">
+                            @Html.Raw(Model.mieuta)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+}
+@section scripts{
+    <script src="~/Content/assets/js/single_custom.js"></script>
+}

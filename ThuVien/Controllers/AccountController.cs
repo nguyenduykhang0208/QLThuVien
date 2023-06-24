@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -17,6 +21,7 @@ namespace ThuVien.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -133,12 +138,58 @@ namespace ThuVien.Controllers
                     return View(model);
             }
         }
+        // GET: Customers/Edit/5
+        public ActionResult Edit(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var customer = db.Users.Find(id);
+
+            ViewBag.GioiTinhList = new SelectList(new[]
+ {
+                new { Value = "Nam", Text = "Nam" },
+                new { Value = "Nữ", Text = "Nữ" }
+                }, "Value", "Text", customer.gioitinh);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(customer);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(ApplicationUser temp)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Users.Attach(temp);
+                db.Entry(temp).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index","Home");
+            }
+            var item = db.Users.Find(temp.Id);
+            ViewBag.GioiTinhList = new SelectList(new[]
+            {
+                new { Value = "Nam", Text = "Nam" },
+                new { Value = "Nữ", Text = "Nữ" }
+            }, "Value", "Text", item.gioitinh);
+            return View(temp);
+        }
 
         //
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
         {
+            ViewBag.GioiTinhList = new SelectList(new[]
+            {
+                new SelectListItem { Value = "Nam", Text = "Nam" },
+                new SelectListItem { Value = "Nữ", Text = "Nữ" }
+            }, "Value", "Text");
+
             return View();
         }
 
@@ -151,7 +202,9 @@ namespace ThuVien.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+
+                
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
