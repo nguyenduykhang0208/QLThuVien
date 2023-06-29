@@ -30,7 +30,7 @@
                 <a href="#" class="nav-link">
                     <i class="fab fa-accusoft"></i>
                     <p>
-                        Quản lý Thư Viện
+                        Quản lý Tài liệu
                         <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
@@ -54,7 +54,7 @@
                 <a href="#" class="nav-link">
                     <i class="fas fa-table"></i>
                     <p>
-                        Quản lý Mượn Sách
+                        Quản lý Mượn Trả
                         <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
@@ -67,15 +67,9 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="@Url.Action("ListOrder","PhieuMuon")" class="nav-link">
+                        <a href="@Url.Action("DoiDuyet","PhieuMuon")" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Phiếu đợi duyệt</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/admin/phieumuon" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Phiếu chưa trả</p>
                         </a>
                     </li>
                 </ul>
@@ -93,6 +87,22 @@
                     <i class="fas fa-pen-fancy"></i>
                     <p>
                         Tác giả
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/admin/nxb" class="nav-link">
+                    <i class="fa fa-industry"></i>
+                    <p>
+                        Nhà xuất bản
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/admin/tintuc" class="nav-link">
+                    <i class="fa fa-newspaper"></i>
+                    <p>
+                        Tin tức
                     </p>
                 </a>
             </li>

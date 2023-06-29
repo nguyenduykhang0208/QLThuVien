@@ -19,16 +19,10 @@ namespace ThuVien.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int masach { get; set; }
 
-        public DateTime ngaymuon { get; set; }
+        public int soluong { get; set; }
 
-        public DateTime? ngaytra { get; set; }
+        //public int sosachmat { get; set; }
 
-        public int? songaytre { get; set; }
-
-        public string tinhtrang { get; set; }
-
-        [Column(TypeName = "money")]
-        public decimal? sotienphat { get; set; }
 
         public virtual phieumuon phieumuon { get; set; }
 

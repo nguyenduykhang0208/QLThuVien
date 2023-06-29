@@ -1,0 +1,79 @@
+﻿@model IEnumerable<ThuVien.Models.ViewModels.ChitietmuonViewModel>
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+
+<style>
+    .news_section_container {
+        margin-top: 180px;
+        height: 700px;
+    }
+</style>
+<div class="container news_section_container">
+
+
+    <table class="table">
+        <tr class="text-center">
+            <th>STT</th>
+            <th>Ảnh</th>
+            <th>Tên sách</th>
+            <th>Thể loại</th>
+            <th>Số lượng mượn</th>
+        </tr>
+        @if (Model != null && Model.Any())
+        {
+            var i = 0;
+
+            foreach (var item in Model)
+            {
+                var theloai = item.Sach.theloais.Select(tl => tl.tentheloai);
+                var chuoiTL = string.Join(", ", theloai);
+                <tr class="text-center" id="trow_@item.Sach.masach">
+                    <td>@(i+1)</td>
+                    <td><img src="@item.Sach.anh" width="60" /></td>
+                    <td>
+                        <a href="/book/detail/@item.Sach.masach">
+                            @item.Sach.tensach
+                        </a>
+                    </td>
+                    <td>@chuoiTL</td>
+                    <td>@item.soluongmuon</td>
+
+
+                </tr>
+                i++;
+            }
+        }
+        else
+        {
+            <tr>
+                <th colspan="7">Không có cuốn sách nào!!</th>
+            </tr>
+        }
+    </table>
+
+    <div>
+        <a href="/account/listordercus" class="btn btn-sm btn-outline-info">Quay lại</a>
+        @*<a href="" data-id="@item.masach" class="btn btn-sm btn-success btnUpdate">Chi tiết</a>*@
+
+    </div>
+</div>
+
+<script>
+    $('body').on('click', '.btnCancel', function myfunction() {
+        var id = $(this).data("id");
+        var conf = confirm('Xác nhận hủy?')
+        if (conf == true) {
+            $.ajax({
+                url: '/account/cancel',
+                type: 'POST',
+                data: { id: id },
+                success: function (rs) {
+                    if (rs.success) {
+                        $('#trow_' + id).remove();
+
+                    }
+                }
+            });
+        }
+    });
+</script>
+

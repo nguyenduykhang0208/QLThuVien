@@ -1,0 +1,19 @@
+﻿@model IEnumerable<ThuVien.Models.theloai>
+
+<li class="active"><a href="#">Tất cả</a></li>
+
+@if (Model != null && Model.Any())
+{
+    foreach (var item in Model)
+    {
+        <ul class="sidebar_categories">
+            <li><a href="#">@item.tentheloai</a></li>
+            @*<li class="active"><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>Women</a></li>
+                <li><a href="#">Accessories</a></li>
+                <li><a href="#">New Arrivals</a></li>
+                <li><a href="#">Collection</a></li>
+                <li><a href="#">Shop</a></li>*@
+        </ul>
+    }
+
+}

@@ -66,12 +66,15 @@ namespace ThuVien.Models
         public string UserName { get; set; }
         [Required]
         public string FullName { get; set; }
-
+        [Required]
         public string Phone { get; set; }
         public string gioitinh { get; set; }
+        [Required]
         public string masv { get; set; }
+        [Required]
         public string diachi { get; set; }
         public int matsach { get; set; }
+        [Required]
         public string Role { get; set; }
 
         [Required]
@@ -92,6 +95,19 @@ namespace ThuVien.Models
     }
     public class RegisterViewModel
     {
+        public string UserName { get; set; }
+        [Required]
+        public string FullName { get; set; }
+        [Required]
+        public string Phone { get; set; }
+        [Required]
+        public string gioitinh { get; set; }
+        [Required]
+        public string masv { get; set; }
+        [Required]
+        public string diachi { get; set; }
+        public int matsach { get; set; }
+        public string Role { get; set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

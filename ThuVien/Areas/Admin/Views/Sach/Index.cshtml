@@ -107,7 +107,7 @@
                                     <td>@item.nhaxuatban.tennxb</td>
                                     <td>@item.sotrang</td>
                                     <td>@item.soluong</td>
-                                    <td>@item.giabia</td>
+                                    <td>@ThuVien.Models.Common.Common.FormatNumber(item.giabia, 0)</td>
                                     <td class="text-center">
                                         <a href='#' data-id="@item.masach" class="btnActive">@Html.Raw(strCheck)</a>
                                     </td>

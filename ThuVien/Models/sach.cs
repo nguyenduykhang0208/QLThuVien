@@ -30,9 +30,9 @@ namespace ThuVien.Models
         public string namxb { get; set; }
 
         public int manxb { get; set; }
-
+        [Required]
         public int? sotrang { get; set; }
-
+        [Required]
         public int soluong { get; set; }
 
         public string mieuta { get; set; }
@@ -40,16 +40,16 @@ namespace ThuVien.Models
         public bool TrangThai { get; set; }
 
         [Column(TypeName = "money")]
+        [Required]
+        [Range(0, double.MaxValue, ErrorMessage = "Giá phải là số không âm.")]
         public decimal giabia { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<chitietmuon> chitietmuons { get; set; }
 
         public virtual nhaxuatban nhaxuatban { get; set; }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tacgia> tacgias { get; set; }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<theloai> theloais { get; set; }
     }

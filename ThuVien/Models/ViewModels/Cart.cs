@@ -53,6 +53,11 @@ namespace ThuVien.Models.ViewModels
         {
             Items.Clear();
         }
+
+        public int GetCountOfItem()
+        {
+            return Items.Count;
+        }
     }
 
     public class CartItem

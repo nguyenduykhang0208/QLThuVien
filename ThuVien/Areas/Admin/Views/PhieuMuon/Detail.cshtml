@@ -1,0 +1,120 @@
+﻿@model PagedList.PagedList<ThuVien.Models.ViewModels.ChitietmuonViewModel>
+@using PagedList
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Chi tiết Phiếu mượn";
+}
+<style>
+    .table {
+        width: 100%;
+    }
+</style>
+@section naviheader{
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/home" class="nav-link">Trang chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/sach" class="nav-link">@ViewBag.Title</a>
+        </li>
+    </ul>
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                @*<h1>Quản lí @ViewBag.Title</h1>*@
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/admin/home">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">@ViewBag.Title</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Danh sách @ViewBag.Title</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover display" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Ảnh</th>
+                            <th>Tên sách</th>
+                            <th>Thể loại</th>
+                            <th>Số lượng mượn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            var i = ((ViewBag.page - 1) * ViewBag.PageSize) + 1;
+                            foreach (var item in Model)
+                            {
+
+                                var theloai = item.Sach.theloais.Select(tl => tl.tentheloai);
+                                var chuoiTL = string.Join(", ", theloai);
+                                <tr id="trow_@item.Sach.masach">
+                                    <td>@(i)</td>
+                                    <td><img src="@item.Sach.anh" width="60" /></td>
+                                    <td>
+                                        <a href="/book/detail/@item.Sach.masach">
+                                            @item.Sach.tensach
+                                        </a>
+                                    </td>
+                                    <td>@chuoiTL</td>
+                                    <td>@item.soluongmuon</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <th colspan="4">Không có cuốn sách nào!!</th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-6" style="margin-top:30px">
+                    @if (ViewBag.ReturnUrl == "/Admin/PhieuMuon/DoiDuyet")
+                    {
+                        <a href="/Admin/PhieuMuon/DoiDuyet" class="btn btn-sm btn-outline-dark">Quay lại</a>
+                    }
+                    else if (ViewBag.ReturnUrl == "/Admin/PhieuMuon")
+                    {
+                        <a href="/Admin/PhieuMuon" class="btn btn-sm btn-outline-dark">Quay lại</a>
+                    }
+
+                </div>
+                <div class="col-6" style="text-align:right">
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                </div>
+            </div>
+        </div>
+
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+</section>

@@ -1,0 +1,272 @@
+﻿@model PagedList.PagedList<ThuVien.Models.phieumuon>
+@using PagedList
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Phiếu đợi duyệt";
+}
+<style>
+    .table {
+        width: 120%;
+    }
+
+    .stt_check {
+        text-align: center;
+    }
+
+    .stt_check_head {
+        width: 100px;
+    }
+
+
+    .stt_check1 {
+        text-align: center;
+    }
+
+    .stt_check_head1 {
+        width: 100px;
+    }
+</style>
+@section naviheader{
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/home" class="nav-link">Trang chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/sach" class="nav-link">@ViewBag.Title</a>
+        </li>
+    </ul>
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quản lí @ViewBag.Title</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/admin/home">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">@ViewBag.Title</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Danh sách @ViewBag.Title</h3>
+
+            <div class="card-tools">
+                <a href="" class="btn btn-success" id="btnConfirmAll">Xác nhận</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+                    @using (Html.BeginForm("index", "PhieuMuon", FormMethod.Get, new { }))
+                    {
+                        <div class="input-group input-group-sm">
+                            @Html.TextBox("Searchtext", null, new { @class = "form-control" })
+                            <span class="input-group-append">
+                                <button type="submit" class="btn btn-info btn-flat">Tìm kiếm</button>
+                            </span>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover display" id="dataTable" width="200%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="SelectAll" /></th>
+                            <th>STT</th>
+                            <th>UserName</th>
+                            <th>Mã phiếu mượn</th>
+                            <th>Ngày mượn</th>
+                            <th>Số loại sách</th>
+                            @*<th>Tổng tiền phạt</th>*@
+                            <th class="stt_check_head">Đã Duyệt</th>
+                            <th class="stt_check_head1">Từ chối</th>
+                            <th>#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            var i = ((ViewBag.page - 1) * ViewBag.PageSize) + 1;
+                            foreach (var item in Model)
+                            {
+                                var strCheck = item.trangthaiduyet ? "<i class='fa fa-check text-success'></i>" : "<i class='fa fa-times text-danger'></i>";
+                                var strCheck1 = item.tuchoi ? "<i class='fa fa-check text-success'></i>" : "<i class='fa fa-times text-danger'></i>";
+                                <tr id="trow_@item.maphieumuon">
+                                    <td><input type="checkbox" class="cbkItem" value="@item.maphieumuon" /></td>
+                                    <td>@i</td>
+                                    <td>@item.UserName</td>
+                                    <td>@item.maphieumuon</td>
+                                    <td>@item.ngaymuon</td>
+                                    <td>@item.soluongchitietmuon</td>
+                                    @*<td>@item.tongtienphat</td>*@
+                                    <td class="stt_check">
+                                        <a href='#'>@Html.Raw(strCheck)</a>
+                                    </td>
+                                    <td class="stt_check1">
+                                        <a href='#'>@Html.Raw(strCheck1)</a>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/phieumuon/detail/@item.maphieumuon" class="btn btn-sm btn-primary">Chi tiết</a>
+                                        <a href="#" id="@item.maphieumuon" class="btn btn-sm btn-success btnConfirm" data-toggle="modal" data-target="#AceptModal">Xác nhận</a>
+                                        <a href="#" class="btn btn-sm btn-danger btnReject" data-toggle="modal" data-target="#supplierModal" id="@item.maphieumuon">Từ chối</a>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4">Không có bản ghi nào!</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-6"></div>
+                <div class="col-6" style="text-align:right">
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                </div>
+            </div>
+        </div>
+
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+</section>
+
+<div id="rejectModalContainer"></div>
+<div id="AcceptModalContainer">
+    <input type="hidden" class="get_id"/>
+</div>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function myfunction() {
+            function showAcceptModal() {
+                $('#AcceptModalContainer').load('/admin/phieumuon/Partial_Accept', function () {
+                    $('#AcceptModal').modal('show');
+                });
+            }
+
+            function confirmPhieu(url, selectedNgayHetHan,t_id) {
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: { id: t_id, hethan: selectedNgayHetHan},
+                        success: function (response) {
+                            alert("Thành công");
+                            location.reload();
+                        },
+                    });
+            }
+
+            // Khi người dùng nhấp vào nút "Duyệt" trên view doiduyet
+            $('.btnConfirm').click(function () {
+                showAcceptModal();
+                $('body').on('click', '#confirmDateBtn', function () {
+                    var selectedNgayHetHan = $('#assessment_date').val();
+                    var t_id = $(".btnConfirm").attr("id");
+                    var url = "/Admin/PhieuMuon/Confirm"
+                    confirmPhieu(url, selectedNgayHetHan, t_id);
+                });
+                $('#AcceptModalContainer').html('');
+            });
+
+
+            $('body').on('click', '#btnConfirmAll', function (e) {
+                e.preventDefault();
+                var str = "";
+                var checkbox = $(this).parents('.card').find('tr td input:checkbox')
+                var i = 0;
+                checkbox.each(function () {
+                    if (this.checked) {
+                        checkbox.attr('selected', 'checked')
+                        var _id = $(this).val();
+                        if (i === 0) {
+                            str += _id;
+                        } else {
+                            str += "," + _id;
+                        }
+                        i++;
+                    } else {
+                        checkbox.attr('selected', '')
+                    }
+                });
+                if (str.length > 0) {
+                    var conf = confirm('Bạn có muốn duyệt các bản ghi này hay không?');
+                    if (conf === true) {
+                        showAcceptModal();
+                        $('body').on('click', '#confirmDateBtn', function () {
+                            var selectedNgayHetHan = $('#assessment_date').val();
+                            var url = "/Admin/PhieuMuon/ConfirmAll"
+                            confirmPhieu(url, selectedNgayHetHan, str);
+                        });
+                        $('#AcceptModalContainer').html('');
+                    }
+                }
+            });
+
+            $('body').on('change', '#SelectAll', function () {
+                var checkStatus = this.checked;
+                var checkbox = $(this).parents('.card-body').find('tr td input:checkbox');
+                checkbox.each(function () {
+                    this.checked = checkStatus;
+                    if (this.checked) {
+                        checkbox.attr('selected', 'checked');
+                    } else {
+                        checkbox.attr('selected', '');
+                    }
+                });
+            });
+
+            $('.btnReject').click(function () {
+                var id = $(this).attr("id");
+
+                // Đóng modal cũ (nếu có)
+                if ($('#supplierModal').hasClass('show')) {
+                    $('#supplierModal').modal('hide');
+                }
+
+                // Xóa nội dung modal cũ trong container
+                $('#rejectModalContainer').html('');
+
+                // Gọi AJAX để lấy nội dung mới cho modal
+                $.ajax({
+                    url: '/admin/phieumuon/Modal_Reject',
+                    type: 'GET',
+                    data: { t_id: id },
+                    success: function (rs) {
+                        $('#rejectModalContainer').html(rs); // Gán nội dung của partial view vào container
+                        $('#supplierModal').modal('show'); // Hiển thị modal
+                    }
+                });
+            });
+
+
+        });
+    </script>
+}
+
+

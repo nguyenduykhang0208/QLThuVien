@@ -1,0 +1,33 @@
+﻿<!-- Modal -->
+
+<div class="modal fade" id="AcceptModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Duyệt phiếu mượn</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group date datepickers" id="ass_date" data-target-input="nearest">
+                    <label for="assessment_date" class="col-md-4 col-form-label arterix">Ngày hết hạn</label>
+                    <input id="assessment_date" name="assessment_date" type="text" data-target="#ass_date" data-toggle="datetimepicker"
+                        class="form-control col-md-6 datetimepicker-input assessment-date-keypress"
+                        autocomplete="off" required>
+                    <div class="input-group-append" data-target="#ass_date" data-toggle="datetimepicker">
+                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="confirmDateBtn">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(".datepickers").datetimepicker({});
+</script>

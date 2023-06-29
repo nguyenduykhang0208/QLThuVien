@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ThuVien.Models.phieumuon>
+
+@if (Model != null && Model.Any())
+{
+    var i = ((ViewBag.page - 1) * ViewBag.PageSize) + 1;
+    foreach (var item in Model)
+    {
+        var strCheck = item.trangthaiduyet ? "<i class='fa fa-check text-success'></i>" : "<i class='fa fa-times text-danger'></i>";
+        var strCheck1 = item.tuchoi ? "<i class='fa fa-check text-success'></i>" : "<i class='fa fa-times text-danger'></i>";
+        var strCheck2 = item.trangthaitra ? "<i class='fa fa-check text-success'></i>" : "<i class='fa fa-times text-danger'></i>";
+        <tr id="trow_@item.maphieumuon">
+            <td><input type="checkbox" class="cbkItem" value="@item.maphieumuon" /></td>
+            <td>@i</td>
+            <td>@item.UserName</td>
+            <td>@item.maphieumuon</td>
+            <td>@item.ngaymuon</td>
+            <td>@item.ngayhethan</td>
+            <td>@item.ngaytra</td>
+            <td>@item.soluongchitietmuon</td>
+            <td>@ThuVien.Models.Common.Common.FormatNumber(item.tongtienphat, 0)</td>
+            <td class="text-center">
+                <a href='#'>@Html.Raw(strCheck)</a>
+            </td>
+            <td class="text-center">
+                <a href='#'>@Html.Raw(strCheck1)</a>
+            </td>
+            <td class="text-center">
+                <a href='#'>@Html.Raw(strCheck2)</a>
+            </td>
+            <td>@item.ghichu</td>
+            <td>
+                <a href="/admin/phieumuon/detail/@item.maphieumuon" class="btn btn-sm btn-outline-primary">Chi tiết</a>
+                @if (item.trangthaiduyet && !item.trangthaitra)
+                {
+                    <a href="/admin/phieumuon/bookReturn/@item.maphieumuon" class="btn btn-sm btn-outline-warning">Trả sách</a>
+
+                }
+            </td>
+        </tr>
+        i++;
+    }
+}
+else
+{
+    <tr>
+        <td colspan="4">Không có bản ghi nào!</td>
+    </tr>
+}

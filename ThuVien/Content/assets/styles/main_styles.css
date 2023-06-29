@@ -40,7 +40,7 @@ COLOR PALETTE
 1. Fonts
 ***********/
 
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,900');
+
 
 /*********************************
 2. Body and some general stuff
@@ -52,7 +52,7 @@ COLOR PALETTE
 }
 
 body {
-	font-family: 'Poppins', sans-serif;
+	font-family: "Montserrat", sans-serif;
 	font-size: 14px;
 	line-height: 23px;
 	font-weight: 400;
@@ -75,7 +75,7 @@ ul {
 
 p {
 	font-family: 'Poppins', sans-serif;
-	font-size: 14px;
+	font-size: 16px;
 	line-height: 1.7;
 	font-weight: 500;
 	color: #989898;
@@ -287,15 +287,14 @@ section {
 .top_nav {
 	width: 100%;
 	height: 50px;
-	background: #1e1e27;
+	background: #428bca;
 }
 
 .top_nav_left {
 	height: 50px;
 	line-height: 50px;
 	font-size: 13px;
-	color: #b5aec4;
-	text-transform: uppercase;
+	color: white;
 }
 
 /*********************************
@@ -383,22 +382,19 @@ section {
 /*********************************
 3.2 Language
 *********************************/
-
 .language {
 	display: inline-block;
 	position: relative;
 	min-width: 50px;
-	border-right: solid 1px #33333b;
-	padding-right: 20px;
 	padding-left: 20px;
 	text-align: center;
 	vertical-align: middle;
-	background: #1e1e27;
+	background: #428bca;
 }
 
 	.language > a {
 		display: block;
-		color: #b5aec4;
+		color: white;
 		font-weight: 400;
 		height: 50px;
 		line-height: 50px;
@@ -418,7 +414,7 @@ section {
 .language_selection {
 	display: block;
 	position: absolute;
-	text-align:center;
+	right: 0;
 	top: 120%;
 	margin: 0;
 	width: 100%;
@@ -433,7 +429,6 @@ section {
 	-o-transition: opacity 0.3s ease;
 	transition: all 0.3s ease;
 }
-
 
 	.language_selection li {
 		padding-left: 10px;
@@ -461,6 +456,10 @@ section {
 			border-bottom: none;
 		}
 
+		.language_selection li a i {
+			margin-right: 10px;
+		}
+
 /*********************************
 3.3 Account
 *********************************/
@@ -472,12 +471,12 @@ section {
 	padding-left: 20px;
 	text-align: center;
 	vertical-align: middle;
-	background: #1e1e27;
+	background: #428bca;
 }
 
 	.account > a {
 		display: block;
-		color: #b5aec4;
+		color: white;
 		font-weight: 400;
 		height: 50px;
 		line-height: 50px;
@@ -568,9 +567,8 @@ section {
 	.navbar_menu li a {
 		display: block;
 		color: #1e1e27;
-		font-size: 13px;
-		font-weight: 500;
-		text-transform: uppercase;
+		font-size: 16px;
+		font-weight: bold;
 		padding: 20px;
 		-webkit-transition: color 0.3s ease;
 		-moz-transition: color 0.3s ease;
@@ -580,8 +578,13 @@ section {
 	}
 
 		.navbar_menu li a:hover {
-			color: #b5aec4;
+			color: #5bc1ac;
 		}
+
+		.navbar_menu li a:active {
+			color: #5bc1ac;
+		}
+
 
 .navbar_user {
 	margin-left: 37px;
@@ -802,8 +805,9 @@ section {
 /*********************************
 3.6 Logo
 *********************************/
-
 .logo_container {
+	display: flex;
+	align-items: center;
 	position: absolute;
 	top: 50%;
 	-webkit-transform: translateY(-50%);
@@ -813,6 +817,10 @@ section {
 	transform: translateY(-50%);
 	left: 15px;
 }
+
+	.logo_container img {
+		max-width: 100%;
+	}
 
 	.logo_container a {
 		font-size: 24px;
@@ -1047,10 +1055,13 @@ section {
 }
 
 .product_image {
+	height: 250px;
 	width: 100%;
 }
 
 	.product_image img {
+		height: 100%;
+		object-fit: fill;
 		width: 100%;
 	}
 
@@ -1620,9 +1631,9 @@ section {
 11. Footer
 *********************************/
 .footer {
-	height:250px;
-	margin-top:80px;
-	background-color: #24262b;
+	height: 170px;
+	margin-top: 80px;
+	background-color: #5a6f80;
 	padding: 30px 0;
 }
 
@@ -1640,16 +1651,17 @@ section {
 
 }
 
-.footer-col h4::before {
-	content: '';
-	position: absolute;
-	left: 0;
-	bottom: -10px;
-	background-color: #e91e63;
-	height: 2px;
-	box-sizing: border-box;
-	width: 50px;
-}
+	.footer-col h4::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		bottom: -10px;
+		background-color: #e91e63;
+		height: 2px;
+		box-sizing: border-box;
+		width: 50px;
+	}
+
 
 .footer-col ul li:not(:last-child) {
 	margin-bottom: 10px;
@@ -1786,7 +1798,7 @@ section {
 	}
 
 	.map_row {
-		width: 100%;
+		width: 110%;
 	}
 	/*********************************
 Rule
@@ -1815,50 +1827,54 @@ Rule
 	/*********************************
 4.Contact
 *********************************/
-	.welcome_bakery_area .container {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		text-align: center;
-	}
+.welcome_bakery_area .container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
 
-	.welcome_bakery_area img {
-		margin: 0 auto;
-	}
+.welcome_bakery_area img {
+	margin: 0 auto;
+}
 
-	.welcome_bakery_area .main_title {
-		margin-top: 40px;
-	}
+.welcome_bakery_area .main_title {
+	margin-top: 40px;
+}
 
-		.welcome_bakery_area .main_title h2 {
-			text-align: left;
-		}
+.welcome_bakery_area .main_title h2 {
+	text-align: left;
+}
 
-	.welcome_bakery_area iframe {
-		margin: 20px auto;
-	}
+.welcome_bakery_area iframe {
+	margin: 20px auto;
+}
 
-	/*********************************
+/*********************************
 Rule
 *********************************/
-	.rule {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		margin-top: 190px;
-	}
+.rule {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 190px;
+}
 
-	.rule_content {
-		max-width: 600px;
-		padding: 20px;
-		text-align: center;
-	}
+.rule_content {
+	max-width: 600px;
+	padding: 20px;
+	text-align: center;
+}
 
-	.header_title_rule {
-		text-align: center;
-	}
+.header_title_rule {
+	text-align: center;
+}
 
-	.rule_content p {
-		text-align: left;
-	}
+.rule_content p {
+	text-align: left;
+}
+
+.media-body p{
+	font-size:20px;
+}

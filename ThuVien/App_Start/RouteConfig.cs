@@ -13,11 +13,11 @@ namespace ThuVien
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.MapRoute(
-                name: "CheckOut",
-                url: "thanh-toan",
-                defaults: new { controller = "Cart", action = "CheckOut", alias = UrlParameter.Optional },
-                namespaces: new[] { "ThuVien.Controllers" }
-             );
+               name: "DetailNew",
+               url: "{alias}-n{id}",
+               defaults: new { controller = "News", action = "Detail", id = UrlParameter.Optional },
+               namespaces: new[] { "ThuVien.Controllers" }
+           );
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

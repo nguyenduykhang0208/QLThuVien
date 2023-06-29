@@ -1,0 +1,89 @@
+﻿@model IEnumerable<ThuVien.Models.phieumuon>
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+
+<style>
+    .news_section_container {
+        margin-top: 180px;
+        height:700px;
+    }
+</style>
+<div class="container news_section_container">
+
+    <table class="table">
+        <tr class="text-center">
+            <th>STT</th>
+            <th>Ngày mượn</th>
+            <th>Số loại sách</th>
+            <th>Trạng thái</th>
+            <th>Ghi chú</th>
+            <th style="width:100px;">#</th>
+        </tr>
+        @if (Model != null && Model.Any())
+        {
+            var i = 0;
+
+            foreach (var item in Model)
+            {
+                <tr class="text-center" id="trow_@item.maphieumuon">
+                    <td>@(i+1)</td>
+                    <td>@item.ngaymuon</td>
+                    <td>@item.soluongchitietmuon</td>
+                    @if (@item.trangthaiduyet)
+                    {
+                        <td>Đã duyệt</td>
+                    }
+                    else
+                    {
+                        if (item.tuchoi)
+                        {
+                            <td>Đã hủy</td>
+
+                        }
+                        else
+                        {
+                            <td>Chưa duyệt</td>
+                        }
+                    }
+                    <td>@item.ghichu</td>
+                    <td width="200px">
+                        <a href="/account/detailorder/@item.maphieumuon" data-id="@item.maphieumuon" class="btn btn-sm btn-info">Chi tiết</a>
+                        @if (!item.trangthaiduyet && !item.tuchoi)
+                        {
+                            <a href="#" data-id="@item.maphieumuon" class="btn btn-sm btn-danger btnCancel">Hủy</a>
+
+                        }
+                    </td>
+                </tr>
+                i++;
+            }
+        }
+        else
+        {
+            <tr>
+                <th colspan="7">Không có đơn mượn nào!!</th>
+            </tr>
+        }
+    </table>
+</div>
+
+<script>
+    $('body').on('click', '.btnCancel', function myfunction() {
+        var id = $(this).data("id");
+        alert(id);
+        var conf = confirm('Xác nhận hủy?')
+        if (conf == true) {
+            $.ajax({
+                url: '/account/cancel',
+                type: 'POST',
+                data: { id: id },
+                success: function (rs) {
+                    if (rs.success) {
+                        location.reload();
+
+                    }
+                }
+            });
+        }
+    });
+</script>
+

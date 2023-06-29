@@ -12,10 +12,9 @@
     @if (Model != null && Model.Any())
     {
         var i = 0;
-      
+
         foreach (var item in Model)
         {
-         
             <tr class="text-center" id="trow_@item.masach">
                 <td>@(i+1)</td>
                 <td><img src="@item.anh" width="60" /></td>
@@ -24,9 +23,9 @@
                         @item.tensach
                     </a>
                 </td>
-                <td>@item.tensach</td>
-                <td><input type="number" class="form-control" id="Quantity_@item.masach" value="@item.soluong" /></td>
-               
+                <td>@item.theloai</td>
+                <td><input type="number" class="quantity-input form-control" id="Quantity_@item.masach" value="@item.soluong" min="1" max="2" /></td>
+
                 <td>
                     <a href="/book/detail/@item.masach" data-id="@item.masach" class="btn btn-sm btn-outline-info">Chi tiết</a>
                     <a href="#" data-id="@item.masach" class="btn btn-sm btn-danger btnDelete">Xóa</a>
@@ -44,4 +43,30 @@
         </tr>
     }
 </table>
+<script>
+    $(document).ready(function () {
+        $('.quantity-input').on('change', function () {
+            var itemId = $(this).data('itemid');
+            var quantity = $(this).val();
+
+            $.ajax({
+                url: '/Cart/UpdateQuantity',
+                type: 'POST',
+                data: { itemId: itemId, quantity: quantity },
+                success: function (response) {
+                    // Cập nhật thành công, có thể thực hiện các hành động khác nếu cần.
+                },
+                error: function (xhr, status, error) {
+                    // Xử lý lỗi nếu có.
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
+
+
 

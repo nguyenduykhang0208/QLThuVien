@@ -31,7 +31,7 @@ namespace ThuVien.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-
+        public virtual DbSet<TinTuc> TinTucs { get; set; }
         public virtual DbSet<chitietmuon> chitietmuons { get; set; }
         public virtual DbSet<nhaxuatban> nhaxuatbans { get; set; }
         public virtual DbSet<phieumuon> phieumuons { get; set; }

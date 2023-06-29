@@ -55,12 +55,7 @@ jQuery(document).ready(function($)
 	initIsotopeFiltering();
 	initSlider();
 
-	/* 
-
-	2. Set Header
-
-	*/
-
+/* 2. Set Header*/
 	function setHeader()
 	{
 		if(window.innerWidth < 992)

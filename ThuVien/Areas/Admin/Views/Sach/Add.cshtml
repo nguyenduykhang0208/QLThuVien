@@ -95,7 +95,7 @@
                     <input type="hidden" id="selectedTacGiaHidden" name="selectedTacGia" />
                     <div class="form-group">
                         <label>Tác giả</label>
-                        <select id="selectedTacGia" name="selectedTacGia" multiple="multiple">
+                        <select id="selectedTacGia" name="selectedTacGia" multiple="multiple" required>
                             @foreach (var item in (IEnumerable<SelectListItem>)ViewBag.list_TacGia)
                             {
                                 <option value="@item.Value">@item.Text</option>
@@ -105,7 +105,7 @@
 
                     <div class="form-group">
                         <label for="exampleInputPassword1">NXB</label>
-                        <select name="selectedNXB" class="form-control">
+                        <select name="selectedNXB" class="form-control" required>
                             @foreach (var item in ViewBag.NXB as IEnumerable<SelectListItem>)
                             {
                                 <option value="@item.Value">@item.Text</option>
@@ -129,8 +129,8 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Số trang</label>
-                                @Html.TextBoxFor(x => x.sotrang, new { @class = "form-control", @Value = "1" })
-                                @Html.ValidationMessageFor(x => x.sotrang, null, new { @class = "text-danger" })
+                                @Html.EditorFor(x => x.sotrang, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0"} })
+                                @Html.ValidationMessageFor(x => x.sotrang, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-4">
@@ -144,9 +144,8 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Số lượng</label>
-                                <input type="text" name="demoPriceSale" id="demoPriceSale" value="0" class="form-control auto">
-                                @Html.HiddenFor(x => x.soluong, new { @class = "form-control", @placeholder = "Khuyến mãi" })
-                                @Html.ValidationMessageFor(x => x.soluong, null, new { @class = "text-danger" })
+                                @Html.EditorFor(x => x.soluong, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0" } })
+                                @Html.ValidationMessageFor(x => x.soluong, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
@@ -179,6 +178,13 @@
 @section scripts{
     <script>
         $(document).ready(function () {
+            $('.auto').autoNumeric('init');
+            $('#demoPrice').bind('blur focusout keypress keyup', function () {
+                var demoGet = $('#demoPrice').autoNumeric('get');
+                $('#Price').val(demoGet);
+                $('#Price').autoNumeric('set', demoGet);
+            });
+
             CKEDITOR.replace('txtDetail', {
                 customConfig: '/content/ckeditor/config.js',
                 extraAllowedContent: 'span',
@@ -192,28 +198,7 @@
             finder.popup();
         }
 
-        //$(function () {
-        //    $(".datepicker").datepicker({
-        //        dateFormat: "dd/mm/yy",
-        //        changeMonth: true,
-        //        changeYear: true,
-        //        //yearRange:"-10:+10"
-        //        showOn: "both",
-        //        buttonText: "<i class='fa fa-calendar'></i>"
-        //    });
-        //});
-        //$(function () {
-        //    $(".datepicker1").datepicker({
-        //        dateFormat: "dd/mm/yy",
-        //        changeMonth: true,
-        //        changeYear: true,
-        //        //yearRange:"-10:+10"
-        //        showOn: "both",
-        //        buttonText: "<i class='fa fa-calendar'></i>"
-        //    });
-        //});
-        ////Initialize Select2 Elements
-
+     
         $(function () {
             // Date picker for start date
             $('#startdate').datetimepicker({

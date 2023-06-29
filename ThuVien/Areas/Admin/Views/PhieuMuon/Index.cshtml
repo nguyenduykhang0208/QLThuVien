@@ -5,7 +5,11 @@
 @{
     ViewBag.Title = "Phiếu mượn";
 }
-
+<style>
+    .table {
+        width: 170%;
+    }
+</style>
 @section naviheader{
     <!-- Left navbar links -->
     <ul class="navbar-nav">
@@ -47,9 +51,11 @@
             <h3 class="card-title">Danh sách @ViewBag.Title</h3>
 
             <div class="card-tools">
-                <a href="/admin/sach/add" class="btn btn-primary">Thêm mới</a>
-                <a href="#" class="btn btn-danger" id="btnDeleteAll">Xóa</a>
+                <div class="form-group">
+                    @Html.DropDownList("Selectedindex", ViewBag.options as SelectList, new { @class = "form-control"})
+                </div>
             </div>
+
         </div>
         <div class="card-body">
             <div class="row">
@@ -75,32 +81,48 @@
                             <th>UserName</th>
                             <th>Mã phiếu mượn</th>
                             <th>Ngày mượn</th>
+                            <th>Hết hạn</th>
+                            <th>Ngày trả</th>
                             <th>Số loại sách</th>
                             <th>Tổng tiền phạt</th>
-                            <th>Trạng thái</th>
+                            <th>Đã duyệt</th>
+                            <th>Từ chối</th>
+                            <th>Đã trả</th>
+                            <th>Ghi chú</th>
                             <th>#</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody  id="phieumuonContainer">
                         @if (Model != null && Model.Any())
                         {
                             var i = ((ViewBag.page - 1) * ViewBag.PageSize) + 1;
                             foreach (var item in Model)
                             {
                                 var strCheck = item.trangthaiduyet ? "<i class='fa fa-check text-success'></i>" : "<i class='fa fa-times text-danger'></i>";
+                                var strCheck1 = item.tuchoi ? "<i class='fa fa-check text-success'></i>" : "<i class='fa fa-times text-danger'></i>";
+                                var strCheck2 = item.trangthaitra ? "<i class='fa fa-check text-success'></i>" : "<i class='fa fa-times text-danger'></i>";
                                 <tr id="trow_@item.maphieumuon">
                                     <td><input type="checkbox" class="cbkItem" value="@item.maphieumuon" /></td>
                                     <td>@i</td>
-                                    <td>@item.username</td>
+                                    <td>@item.UserName</td>
                                     <td>@item.maphieumuon</td>
                                     <td>@item.ngaymuon</td>
-                                    <td>@item.soluongmuon</td>
-                                    <td>@item.tongtienphat</td>
+                                    <td>@item.ngayhethan</td>
+                                    <td>@item.ngaytra</td>
+                                    <td>@item.soluongchitietmuon</td>
+                                    <td>@ThuVien.Models.Common.Common.FormatNumber(item.tongtienphat    , 0)</td>
                                     <td class="text-center">
                                         <a href='#'>@Html.Raw(strCheck)</a>
                                     </td>
+                                    <td class="text-center">
+                                        <a href='#'>@Html.Raw(strCheck1)</a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href='#'>@Html.Raw(strCheck2)</a>
+                                    </td>
+                                    <td>@item.ghichu</td>
                                     <td>
-                                        <a href="/admin/Sach/detail/@item.maphieumuon" class="btn btn-sm btn-primary">Chi tiết</a>
+                                        <a href="/admin/phieumuon/detail/@item.maphieumuon" class="btn btn-sm btn-primary">Chi tiết</a>
                                     </td>
                                 </tr>
                                 i++;
@@ -201,6 +223,19 @@
             });
         });
 
+        $('#Selectedindex').change(function () {
+                var selected = $(this).val();
+                var pageSize = @ViewBag.PageSize;
+                 var page = @ViewBag.page;
+                $.ajax({
+                    url: '@Url.Action("GetIndexByOption", "PhieuMuon")',
+                    type: 'GET',
+                    data: { op_id: selected, pageSize: pageSize, page: page },
+                    success: function (result) {
+                        $('#phieumuonContainer').html(result);
+                    }
+                });
+            });
 
     </script>
 }

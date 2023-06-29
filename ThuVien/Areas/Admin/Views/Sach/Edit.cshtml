@@ -144,8 +144,8 @@
                             <div class="col-4">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Số trang</label>
-                                    @Html.TextBoxFor(x => x.sotrang, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(x => x.sotrang, null, new { @class = "text-danger" })
+                                    @Html.EditorFor(x => x.sotrang, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0" } })
+                                    @Html.ValidationMessageFor(x => x.sotrang, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="col-4">
@@ -159,8 +159,8 @@
                             <div class="col-4">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Số lượng</label>
-                                    @Html.TextBoxFor(x => x.soluong, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(x => x.soluong, null, new { @class = "text-danger" })
+                                    @Html.EditorFor(x => x.soluong, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0" } })
+                                    @Html.ValidationMessageFor(x => x.soluong, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -193,6 +193,12 @@
 @section scripts{
     <script>
         $(document).ready(function () {
+            $('.auto').autoNumeric('init');
+            $('#demoPrice').bind('blur focusout keypress keyup', function () {
+                var demoGet = $('#demoPrice').autoNumeric('get');
+                $('#Price').val(demoGet);
+                $('#Price').autoNumeric('set', demoGet);
+            });
             CKEDITOR.replace('txtDetail', {
                 customConfig: '/content/ckeditor/config.js',
                 extraAllowedContent: 'span',

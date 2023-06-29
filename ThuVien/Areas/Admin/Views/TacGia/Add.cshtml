@@ -26,7 +26,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Thêm mới Thể loại</h1>
+                <h1>Thêm mới tác giả</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -65,7 +65,7 @@
                     <div id="logins-part" class="content active dstepper-block" role="tabpanel" aria-labelledby="logins-part-trigger">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Tên tác giả</label>
-                            @Html.TextBoxFor(x => x.tentacgia, new { @class = "form-control", @placeholder = "TenTheLoai" })
+                            @Html.TextBoxFor(x => x.tentacgia, new { @class = "form-control", @placeholder = "" })
                             @Html.ValidationMessageFor(x => x.tentacgia, null, new { @class = "text-danger" })
                         </div>
                         <div class="form-group">

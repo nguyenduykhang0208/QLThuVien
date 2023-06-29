@@ -1,87 +1,42 @@
-﻿
+﻿@model ThuVien.Models.ApplicationUser
 @{
     ViewBag.Title = "Xác nhận";
 }
-<h2 style="text-align:center;color:#49e4fa">Thông tin đơn mượn</h2>
-@{
-    ThuVien.Models.ApplicationUser cus = (ThuVien.Models.ApplicationUser)Session["usr"];
-}
-<table align="center">
-    @using (Html.BeginForm())
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_responsive.css">
+
+@if (ViewBag.CheckCart != null)
+{
+    using (Html.BeginForm("CheckOut", "Cart", FormMethod.Post, new { }))
     {
-        @Html.ValidationSummary(true)
-        <tr style="height:40px">
-            <td> Tên: </td>
-            <td style="font-weight:bold">  @cus.FullName </td>
-        </tr>
-        <tr style="height:40px">
-            <td> Địa chỉ: </td>
-            <td style="font-weight:bold">  @cus.diachi </td>
-        </tr>
-        <tr style="height:40px">
-            <td> Số điện thoại: </td>
-            <td style="font-weight:bold">  @cus.Phone </td>
-        </tr>
-        <tr style="height:40px">
-            <td> Email : </td>
-            <td style="font-weight:bold"> @cus.Email  </td>
-        </tr>
-        <tr style="height:40px">
-            <td> Ngày mượn: </td>
-            <td style="font-weight:bold"> @DateTime.Now.ToShortDateString() </td>
-        </tr>
-        <tr style="height:40px">
-            <td></td>
-            <td>
-                <input type="Submit" class="pest_btn" value="Xác nhận" />
-                <a class="pest_btn" href="@Url.Action("C","Cart")">Chỉnh sửa thông tin</a>
-            </td>
-
-        </tr>
-    }
-</table>
-
-@*<section class="cart_table_area p_100">
-    <div class="container">
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col" style="background-color:#49e4fa;color:white">STT</th>
-                        <th scope="col" style="background-color:#49e4fa;color:white">Ảnh</th>
-                        <th scope="col" style="background-color:#49e4fa;color:white">Tên sách</th>
-                        <th scope="col" style="background-color:#49e4fa;color:white">Thể loại</th>
-                        <th scope="col" style="background-color:#49e4fa;color:white">Số lượng</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        var i = 
-                        <tr>
-                            <td>
-                                <img class="resize-image-cart" src="~/img/Item/@item.Picture" alt="">
-
-                            </td>
-                            @using (Html.BeginForm("EditCart", "Cart", new { @id = item.IdItem }))
-                            {
-                                <td>@item.Name</td>
-                                <td class="cart_quantity">
-                                    <div class="cart_quantity_button">
-                                        <input class="cart_quantity_input" type="number" name="txtSoluong" min="1" max="2" value="@item.Quantity">
-                                    </div>
-                                </td>
-                            }
+        @Html.AntiForgeryToken()
+        <div class="container" style="margin-top: 160px">
+            <div class="row">
+                <div class="col-md-6">
+                    @Html.Action("Partial_Cus_CheckOut", "Cart")
+                </div>
+                <div class="col-md-6">
+                    <table class="table">
+                        <tr class="text-center">
+                            <th>STT</th>
+                            <th>Ảnh</th>
+                            <th>Tên sách</th>
+                            <th style="width:100px;">Số lượng</th>
                         </tr>
-
-                    }
-                </tbody>
-            </table>
+                        @Html.Action("Partial_Item_CheckOut", "Cart")
+                    </table>
+                </div>
+            </div>
+            
         </div>
-    </div>
-</section>*@
+    }
+}
 
-
-
-
+<script>
+        function OnFailure(rs) {
+            if (!rs.Success) {
+                $('#show_success').html("Đăng kí mượn sách thất bại! Xin vui lòng thử lại");
+            }
+        }
+</script>

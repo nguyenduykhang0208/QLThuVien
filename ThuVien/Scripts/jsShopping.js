@@ -22,12 +22,11 @@
             }
         });
     });
-    $('body').on('click', '.btnUpdate', function (e) {
+    $('body').on('change', '.quantity-input', function (e) {
         e.preventDefault();
-        var id = $(this).data("id");
-        var quantity = $('#Quantity_' + id).val();
+        var id = $(this).attr("id").split("_")[1];
+        var quantity = $(this).val();
         Update(id, quantity);
-
     });
     $('body').on('click', '.btnDeleteAll', function (e) {
         e.preventDefault();

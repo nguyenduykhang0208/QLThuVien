@@ -10,9 +10,11 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ThuVien.Models;
+using ThuVien.Models.ViewModels;
 
 namespace ThuVien.Controllers
 {
@@ -179,6 +181,59 @@ namespace ThuVien.Controllers
             return View(temp);
         }
 
+        public ActionResult ListOrderCus()
+        {
+            string id = User.Identity.GetUserId();
+            var customer = db.Users.Find(id);
+            if (customer == null)
+            {
+                return RedirectToAction("Login", "Acction");
+            }
+            IEnumerable<phieumuon> list = db.phieumuons.Where(p => p.userID == id).OrderByDescending(x=>x.ngaymuon).ToList();
+            return View(list);
+        }
+
+        public ActionResult DetailOrder(int id)
+        {
+            var chitietmuonList = (from ct in db.chitietmuons
+                                   join s in db.saches on ct.masach equals s.masach
+                                   where ct.maphieumuon == id
+                                   select new ChitietmuonViewModel
+                                   {
+                                       Sach = s,
+                                       soluongmuon = ct.soluong
+                                   }).ToList();
+            return View(chitietmuonList);
+        }
+
+
+
+        public ActionResult Cancel(int? id)
+        {
+            if (id.HasValue)
+            {
+                 string cus_id = User.Identity.GetUserId();
+                var customer = db.Users.Find(cus_id);
+                var item = db.phieumuons.Find(id);
+                var chiTietMuon = db.chitietmuons.Where(ctm => ctm.maphieumuon == id).ToList();
+                foreach (var chiTiet in chiTietMuon)
+                {
+                    var book = db.saches.Find(chiTiet.masach);
+                    if (book != null)
+                    {
+                        book.soluong += chiTiet.soluong;
+                        db.Entry(book).State = System.Data.Entity.EntityState.Modified;
+                    }
+                }
+                item.ghichu = customer.UserName +" đã hủy";
+                item.tuchoi = true;
+                db.phieumuons.Attach(item);
+                db.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -202,24 +257,46 @@ namespace ThuVien.Controllers
         {
             if (ModelState.IsValid)
             {
+                model.Role = "Customer";
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FullName = model.FullName,
+                    Phone = model.Phone,
+                    gioitinh = model.gioitinh,
+                    masv = model.masv,
+                    diachi = model.diachi,
+                    matsach = model.matsach
+                };
 
-                
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    UserManager.AddToRole(user.Id, model.Role);
+
+                    //var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+                    //var customerRoleId = roleManager.Roles.FirstOrDefault(r => r.Name == "Customer")?.Id;
+
+                    //if (!string.IsNullOrEmpty(customerRoleId))
+                    //{
+                    //    await UserManager.AddToRoleAsync(user.Id, customerRoleId);
+                    //}
+
+                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    // Rest of your code...
 
                     return RedirectToAction("Index", "Home");
                 }
+
                 AddErrors(result);
             }
+            ViewBag.GioiTinhList = new SelectList(new[]
+          {
+                new SelectListItem { Value = "Nam", Text = "Nam" },
+                new SelectListItem { Value = "Nữ", Text = "Nữ" }
+            }, "Value", "Text");
 
             // If we got this far, something failed, redisplay form
             return View(model);
