@@ -40,8 +40,6 @@ namespace ThuVien.Models
         public bool TrangThai { get; set; }
 
         [Column(TypeName = "money")]
-        [Required]
-        [Range(0, double.MaxValue, ErrorMessage = "Giá phải là số không âm.")]
         public decimal giabia { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

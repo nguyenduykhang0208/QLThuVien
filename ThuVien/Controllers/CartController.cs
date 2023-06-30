@@ -121,12 +121,14 @@ namespace ThuVien.Controllers
                     order.trangthaiduyet = false;
                     order.trangthaitra = false;
                     order.tuchoi = false;
+                    order.sosachmat = 0;
                     cart.Items.ForEach(x =>
                     {
                         order.chitietmuons.Add(new chitietmuon
                         {
                             masach = x.masach,
                             soluong = x.soluong,
+                            sotralai = 0
                         });
 
                         // Trừ số lượng sách trong kho

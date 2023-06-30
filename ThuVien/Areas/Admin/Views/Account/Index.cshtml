@@ -52,13 +52,12 @@
                                 <td>@item.FullName</td>
                                 <td>@item.Email</td>
 
-                                @if (!User.IsInRole("Admin"))
-                                {
+                   
                                     <td>
                                         <a href="/admin/account/edit/@item.Id" class="btn btn-sm btn-primary">Sửa</a>
                                         @*<a href="#" data-id="@item.Id" data-user="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>*@
                                     </td>
-}
+
 
                             </tr>
                             i++;

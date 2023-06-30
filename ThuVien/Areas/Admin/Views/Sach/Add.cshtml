@@ -84,7 +84,7 @@
                     <input type="hidden" id="selectedTheLoaisHidden" name="selectedTheLoais" />
                     <div class="form-group">
                         <label>Thể loại</label>
-                        <select id="selectedTheLoais" name="selectedTheLoais" multiple="multiple">
+                        <select id="selectedTheLoais" name="selectedTheLoais" multiple="multiple" required>
                             @foreach (var item in (IEnumerable<SelectListItem>)ViewBag.list_TheLoai)
                             {
                                 <option value="@item.Value">@item.Text</option>
@@ -137,7 +137,7 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Giá bìa</label>
                                 <input type="text" name="demoPrice" value="0" id="demoPrice" class="form-control auto" data-a-dec="," data-a-sep=".">
-                                @Html.HiddenFor(x => x.giabia, new { @class = "", @placeholder = "Giá" })
+                                @Html.HiddenFor(x => x.giabia, new { @class = "form-control", @placeholder = "Giá" })
                                 @Html.ValidationMessageFor(x => x.giabia, null, new { @class = "text-danger" })
                             </div>
                         </div>
@@ -179,12 +179,18 @@
     <script>
         $(document).ready(function () {
             $('.auto').autoNumeric('init');
+
             $('#demoPrice').bind('blur focusout keypress keyup', function () {
                 var demoGet = $('#demoPrice').autoNumeric('get');
-                $('#Price').val(demoGet);
-                $('#Price').autoNumeric('set', demoGet);
+                if (!isNaN(demoGet) && demoGet >= 0) {
+                    $('#giabia').val(demoGet);
+                    $('#giabia').autoNumeric('set', demoGet);
+                } else {
+                    alert("Vui lòng nhập giá trị hợp lệ!");
+                    $("#demoPrice").val('');
+                    return;
+                }
             });
-
             CKEDITOR.replace('txtDetail', {
                 customConfig: '/content/ckeditor/config.js',
                 extraAllowedContent: 'span',

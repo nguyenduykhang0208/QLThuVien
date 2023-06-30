@@ -43,5 +43,6 @@ namespace ThuVien.Models
             return new ApplicationDbContext();
         }
 
+        //public System.Data.Entity.DbSet<ThuVien.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

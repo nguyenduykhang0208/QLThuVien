@@ -6,6 +6,8 @@ using System.Web.Mvc;
 
 namespace ThuVien.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
+
     public class PhieuTraController : Controller
     {
         // GET: Admin/PhieuTra

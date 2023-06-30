@@ -11,6 +11,8 @@ using System.Data.Entity.Infrastructure;
 
 namespace ThuVien.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
+
     public class TinTucController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

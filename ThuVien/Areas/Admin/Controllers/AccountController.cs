@@ -14,8 +14,8 @@ using ThuVien;
 namespace ThuVien.Areas.Admin.Controllers
 {
 
-    //[Authorize(Roles = "Admin")]
-    public class AccountController : Controller
+     [Authorize(Roles = "Admin")]
+       public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -57,8 +57,8 @@ namespace ThuVien.Areas.Admin.Controllers
         // GET: Admin/Account
         public ActionResult Index()
         {
-            var items = db.Users.ToList();
-            return View(items);
+            var ítems = db.Users.ToList();
+            return View(ítems);
         }
         //
         // GET: /Account/Login
@@ -106,7 +106,7 @@ namespace ThuVien.Areas.Admin.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Login", "Account", new { area = "Admin" });
+            return RedirectToAction("Index", "Home");
         }
         //
         // GET: /Account/Register
@@ -145,7 +145,7 @@ namespace ThuVien.Areas.Admin.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Account");
+                    return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
@@ -177,19 +177,6 @@ namespace ThuVien.Areas.Admin.Controllers
             {
                 ModelState.AddModelError("", error);
             }
-        }
-
-        [HttpPost]
-        public ActionResult Delete(string id)
-        {
-            var item = db.Users.Find(id);
-            if (item != null)
-            {
-                db.Users.Remove(item);
-                db.SaveChanges();
-                return Json(new { success = true });
-            }
-            return Json(new { success = false });
         }
     }
 }

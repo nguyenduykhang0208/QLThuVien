@@ -9,6 +9,8 @@ using Filter = ThuVien.Models.Common.Filter;
 
 namespace ThuVien.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
+
     public class TheLoaiController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

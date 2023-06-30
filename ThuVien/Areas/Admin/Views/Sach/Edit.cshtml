@@ -196,8 +196,14 @@
             $('.auto').autoNumeric('init');
             $('#demoPrice').bind('blur focusout keypress keyup', function () {
                 var demoGet = $('#demoPrice').autoNumeric('get');
-                $('#Price').val(demoGet);
-                $('#Price').autoNumeric('set', demoGet);
+                if (!isNaN(demoGet) && demoGet >= 0) {
+                    $('#giabia').val(demoGet);
+                    $('#giabia').autoNumeric('set', demoGet);
+                } else {
+                    alert("Vui lòng nhập giá trị hợp lệ!");
+                    $("#demoPrice").val('');
+                    return;
+                }
             });
             CKEDITOR.replace('txtDetail', {
                 customConfig: '/content/ckeditor/config.js',

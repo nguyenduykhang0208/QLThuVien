@@ -65,17 +65,12 @@
                         for (int i = 0; i < Model.ctmuon_vmd.Count; i++)
                         {
                             @Html.HiddenFor(m => m.ctmuon_vmd[i].Sach.masach)
+                            @Html.HiddenFor(m => m.ctmuon_vmd[i].maphieumuon)
                             @Html.HiddenFor(m => m.ctmuon_vmd[i].soluongmuon)
                             @Html.HiddenFor(m => m.ctmuon_vmd[i].sotralai, new { id = "item_sotralai_" + Model.ctmuon_vmd[i].Sach.masach })
                         }
 
-                        <!-- Hidden input for ct_muon -->
-                        for (int i = 0; i < Model.ct_muon.Count; i++)
-                        {
-                            @Html.HiddenFor(m => m.ct_muon[i].masach)
-                            @Html.HiddenFor(m => m.ct_muon[i].soluong)
-                            @Html.HiddenFor(m => m.ct_muon[i].sotralai, new { id = "item_sotralai_" + Model.ct_muon[i].masach })
-                        }
+
                         <div class="card">
                             <div class="card-header p-2">
                                 <ul class="nav nav-pills">

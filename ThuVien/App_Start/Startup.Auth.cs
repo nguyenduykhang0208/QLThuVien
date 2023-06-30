@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -63,6 +64,23 @@ namespace ThuVien
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+        }
+    }
+
+    public class AdminAuthorize : AuthorizeAttribute
+    {
+        public override void OnAuthorization(AuthorizationContext filterContext)
+        {
+            // If you are authorized
+            if (this.AuthorizeCore(filterContext.HttpContext))
+            {
+                base.OnAuthorization(filterContext);
+            }
+            else
+            {
+                // else redirect to your Area  specific login page
+                filterContext.Result = new RedirectResult("/Admin/Account/Login");
+            }
         }
     }
 }

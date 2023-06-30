@@ -11,6 +11,8 @@ using System.Data.Entity;
 
 namespace ThuVien.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
+
     public class SachController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -44,7 +46,7 @@ namespace ThuVien.Areas.Admin.Controllers
         {
             ViewBag.NXB = new SelectList(db.nhaxuatbans.ToList(), "manxb", "tennxb");
             // Tạo SelectList
-            SelectList select_tl = new SelectList(db.theloais.ToList(), "matheloai", "TenTheLoai");
+            SelectList select_tl = new SelectList(db.theloais.ToList(), "matheloai", "tentheloai");
             ViewBag.selectedTheLoais = new List<SelectListItem>();
             // Set vào ViewBag
             ViewBag.list_TheLoai = select_tl;
@@ -83,7 +85,7 @@ namespace ThuVien.Areas.Admin.Controllers
 
                 if (selectedTacGia.Length > 0)
                 {
-                    temp.tacgias = db.tacgias.Where(t => selectedTheLoais.Contains(t.matacgia.ToString())).ToList();
+                    temp.tacgias = db.tacgias.Where(t => selectedTacGia.Contains(t.matacgia.ToString())).ToList();
                 }
                 else
                 {
@@ -91,11 +93,22 @@ namespace ThuVien.Areas.Admin.Controllers
                 }
                 int selectedNXBid = int.Parse(selectedNXB[0]);
                 nhaxuatban selectedNXBObj = db.nhaxuatbans.FirstOrDefault(p => p.manxb == selectedNXBid);
-
+                temp.nhaxuatban = selectedNXBObj;
                 db.saches.Add(temp);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.NXB = new SelectList(db.nhaxuatbans.ToList(), "manxb", "tennxb");
+            // Tạo SelectList
+            SelectList select_tl = new SelectList(db.theloais.ToList(), "matheloai", "tentheloai");
+            ViewBag.selectedTheLoais = new List<SelectListItem>();
+            // Set vào ViewBag
+            ViewBag.list_TheLoai = select_tl;
+
+            SelectList select_tg = new SelectList(db.tacgias.ToList(), "matacgia", "tentacgia");
+            ViewBag.selectedTacGia = new List<SelectListItem>();
+            // Set vào ViewBag
+            ViewBag.list_TacGia = select_tg;
             return View(temp);
         }
 

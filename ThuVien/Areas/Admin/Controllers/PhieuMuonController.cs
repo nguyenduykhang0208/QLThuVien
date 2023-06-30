@@ -18,6 +18,8 @@ using System.Data.Entity.Validation;
 
 namespace ThuVien.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
+
     public class PhieuMuonController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -214,11 +216,12 @@ namespace ThuVien.Areas.Admin.Controllers
                                                     {
                                                         Sach = s,
                                                         soluongmuon = ct.soluong,
-                                                        sotralai = ct.sotralai
+                                                        sotralai = ct.sotralai,
+                                                        maphieumuon = ct.maphieumuon
                                                     }).ToList();
 
             viewModel.p_muon = db.phieumuons.Where(p => p.maphieumuon == id).FirstOrDefault();
-            viewModel.ct_muon = db.chitietmuons.Where(ctm => ctm.maphieumuon == id).ToList();
+            //viewModel.ct_muon = db.chitietmuons.Where(ctm => ctm.maphieumuon == id).ToList();
             viewModel.ctmuon_vmd = chitietmuonList;
 
             return PartialView(viewModel);
@@ -241,15 +244,28 @@ namespace ThuVien.Areas.Admin.Controllers
             }
             foreach (var chitiet in temp.ctmuon_vmd)
             {
-                sach t = (sach)db.saches.Where(x => x.masach == chitiet.Sach.masach);
-
+                var t = db.saches.FirstOrDefault(x => x.masach == chitiet.Sach.masach);
+                var ct_muon = db.chitietmuons.FirstOrDefault(x => x.maphieumuon == chitiet.maphieumuon && x.masach == t.masach);
+                if (ct_muon != null)
+                {
+                    ct_muon.sotralai += chitiet.sotralai;
+                    db.Entry(ct_muon).State = EntityState.Modified;
+                }
                 if (t != null)
                 {
                     t.soluong += chitiet.soluongmuon;
                     db.Entry(t).State = EntityState.Modified;
                 }
             }
-
+            //foreach (var chitiet in temp.ct_muon)
+            //{
+            //    var ct_muon = db.chitietmuons.FirstOrDefault(x => x.maphieumuon == chitiet.maphieumuon);
+            //    if (ct_muon != null)
+            //    {
+            //        ct_muon.sotralai += chitiet.sotralai;
+            //        db.Entry(ct_muon).State = EntityState.Modified;
+            //    }
+            //}
             try
             {
                 // Existing code...

@@ -6019,6 +6019,7 @@
     <Content Include="Areas\Admin\Views\PhieuMuon\Partial_Accept.cshtml" />
     <Content Include="Areas\Admin\Views\PhieuMuon\_PartialPhieuMuon.cshtml" />
     <Content Include="Areas\Admin\Views\PhieuMuon\bookReturn.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\View.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
