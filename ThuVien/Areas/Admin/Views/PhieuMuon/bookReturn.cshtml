@@ -57,126 +57,151 @@
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true)
-                        @Html.HiddenFor(m=>m.p_muon.soluongchitietmuon)
-                        @Html.HiddenFor(m=>m.p_muon.ngayhethan)
-                        @Html.HiddenFor(m=>m.p_muon.trangthaiduyet)
-                        @Html.HiddenFor(m=>m.p_muon.userID)
-                    <div class="card">
-                        <div class="card-header p-2">
-                            <ul class="nav nav-pills">
-                                <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Thông tin chung</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Chi tiết</a></li>
-                            </ul>
-                        </div><!-- /.card-header -->
-                        @if (Model != null)
+                        @Html.HiddenFor(m => m.p_muon.soluongchitietmuon)
+                        @Html.HiddenFor(m => m.p_muon.ngayhethan)
+                        @Html.HiddenFor(m => m.p_muon.trangthaiduyet)
+                        @Html.HiddenFor(m => m.p_muon.userID)
+                        <!-- Hidden input for ctmuon_vmd -->
+                        for (int i = 0; i < Model.ctmuon_vmd.Count; i++)
                         {
-                            <div class="card-body">
-                                <div class="tab-content">
-                                    <div class="active tab-pane" id="activity">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Mã phiếu mượn</label>
-                                            @Html.TextBoxFor(x => x.p_muon.maphieumuon, new { @class = "form-control", @readonly = "readonly" })
-                                            @Html.ValidationMessageFor(x => x.p_muon.maphieumuon, null, new { @class = "text-danger" })
-                                        </div>
+                            @Html.HiddenFor(m => m.ctmuon_vmd[i].Sach.masach)
+                            @Html.HiddenFor(m => m.ctmuon_vmd[i].soluongmuon)
+                            @Html.HiddenFor(m => m.ctmuon_vmd[i].sotralai, new { id = "item_sotralai_" + Model.ctmuon_vmd[i].Sach.masach })
+                        }
 
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">UserName</label>
-                                            @Html.TextBoxFor(x => x.p_muon.UserName, new { @class = "form-control", @readonly = "readonly" })
-                                            @Html.ValidationMessageFor(x => x.p_muon.UserName, null, new { @class = "text-danger" })
-                                        </div>
+                        <!-- Hidden input for ct_muon -->
+                        for (int i = 0; i < Model.ct_muon.Count; i++)
+                        {
+                            @Html.HiddenFor(m => m.ct_muon[i].masach)
+                            @Html.HiddenFor(m => m.ct_muon[i].soluong)
+                            @Html.HiddenFor(m => m.ct_muon[i].sotralai, new { id = "item_sotralai_" + Model.ct_muon[i].masach })
+                        }
+                        <div class="card">
+                            <div class="card-header p-2">
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Thông tin chung</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Chi tiết</a></li>
+                                </ul>
+                            </div><!-- /.card-header -->
+                            @if (Model != null)
+                            {
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <div class="active tab-pane" id="activity">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Mã phiếu mượn</label>
+                                                @Html.TextBoxFor(x => x.p_muon.maphieumuon, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(x => x.p_muon.maphieumuon, null, new { @class = "text-danger" })
+                                            </div>
 
-                                        <div class="form-group">
-                                            <label for="startdate">Ngày mượn</label>
-                                            <div class="input-group date" id="startdate" data-target-input="nearest">
-                                                @Html.TextBoxFor(x => x.p_muon.ngaymuon, new { @class = "form-control datetimepicker-input", @readonly = "readonly", data_target = "#startdate" })
-                                                <div class="input-group-append" data-target="#startdate" data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">UserName</label>
+                                                @Html.TextBoxFor(x => x.p_muon.UserName, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(x => x.p_muon.UserName, null, new { @class = "text-danger" })
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="startdate">Ngày mượn</label>
+                                                <div class="input-group date" id="startdate" data-target-input="nearest">
+                                                    @Html.TextBoxFor(x => x.p_muon.ngaymuon, new { @class = "form-control datetimepicker-input", @readonly = "readonly", data_target = "#startdate" })
+                                                    <div class="input-group-append" data-target="#startdate" data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="form-group">
-                                            <label for="startdate">Hết hạn</label>
-                                            <div class="input-group date" id="startdate" data-target-input="nearest">
-                                                @Html.TextBoxFor(x => x.p_muon.ngaymuon, new { @class = "form-control datetimepicker-input", @readonly = "readonly", data_target = "#startdate" })
-                                                <div class="input-group-append" data-target="#startdate" data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            <div class="form-group">
+                                                <label for="startdate">Hết hạn</label>
+                                                <div class="input-group date" id="startdate" data-target-input="nearest">
+                                                    @Html.TextBoxFor(x => x.p_muon.ngaymuon, new { @class = "form-control datetimepicker-input", @readonly = "readonly", data_target = "#startdate" })
+                                                    <div class="input-group-append" data-target="#startdate" data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="form-group">
-                                            <label for="startdate">Ngày trả</label>
-                                            <div class="input-group date" id="startdate" data-target-input="nearest">
-                                                @Html.TextBoxFor(x => x.p_muon.ngaytra, new { @class = "form-control datetimepicker-input", @readonly = "readonly", data_target = "#startdate", @Value = DateTime.Now })
-                                                <div class="input-group-append" data-target="#startdate" data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            <div class="form-group">
+                                                <label for="startdate">Ngày trả</label>
+                                                <div class="input-group date" id="startdate" data-target-input="nearest">
+                                                    @Html.TextBoxFor(x => x.p_muon.ngaytra, new { @class = "form-control datetimepicker-input", @readonly = "readonly", data_target = "#startdate", @Value = DateTime.Now })
+                                                    <div class="input-group-append" data-target="#startdate" data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
 
 
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Số sách mất</label>
-                                                @Html.EditorFor(x => x.p_muon.sosachmat, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0" } })
-                                                @Html.ValidationMessageFor(x => x.p_muon.sosachmat  , "", new { @class = "text-danger" })
+                                                @Html.EditorFor(x => x.p_muon.sosachmat, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0", @readonly = "readonly" } })
+                                                @Html.ValidationMessageFor(x => x.p_muon.sosachmat, "", new { @class = "text-danger" })
                                             </div>
 
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Tiền phạt</label>
-                                            <input type="text" name="demoPrice" value="0" id="demoPrice" class="form-control auto" data-a-dec="," data-a-sep=".">
-                                            @Html.HiddenFor(x => x.p_muon.tongtienphat, new { @class = "", @placeholder = "Giá" })
-                                            @Html.ValidationMessageFor(x => x.p_muon.tongtienphat, null, new { @class = "text-danger" })
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Ghi chú</label>
-                                            @Html.TextAreaFor(x => x.p_muon.ghichu, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(x => x.p_muon.ghichu, null, new { @class = "text-danger" })
-                                        </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Tiền phạt</label>
+                                                <input type="text" name="demoPrice" value="0" id="demoPrice" class="form-control auto" data-a-dec="," data-a-sep=".">
+                                                @Html.HiddenFor(x => x.p_muon.tongtienphat, new { @class = "", @placeholder = "Giá" })
+                                                @Html.ValidationMessageFor(x => x.p_muon.tongtienphat, null, new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Ghi chú</label>
+                                                @Html.TextAreaFor(x => x.p_muon.ghichu, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(x => x.p_muon.ghichu, null, new { @class = "text-danger" })
+                                            </div>
 
-                                    </div>
-                                    <!-- /.tab-pane -->
-                                    <div class="tab-pane" id="settings">
-                                        <div class="row">
-                                            <table class="table">
-                                                <tr class="text-center">
-                                                    <th>STT</th>
-                                                    <th>Ảnh</th>
-                                                    <th>Tên sách</th>
-                                                    <th>Thể loại</th>
+                                        </div>
+                                        <!-- /.tab-pane -->
+                                        <div class="tab-pane" id="settings">
+                                            <div class="row">
+                                                <table class="table">
+                                                    <tr class="text-center">
+                                                        <th>STT</th>
+                                                        <th>Ảnh</th>
+                                                        <th>Tên sách</th>
+                                                        <th>Thể loại</th>
 
-                                                    <th style="width:100px;">Số lượng</th>
-                                                </tr>
-                                                @foreach (var item in Model.ctmuon_vmd)
-                                                {
-                                                    var i = 0;
-                                                    var t = item.Sach.theloais.Select(t => t.tentheloai);
-                                                    var tl = string.Join(", ", t);
-                                                    <tr class="text-center" id="trow_@item.Sach.masach">
-                                                        <td>@(i+1)</td>
-                                                        <td><img src="@item.Sach.anh" width="60" /></td>
-                                                        <td>
-                                                                @item.Sach.tensach
-                                                        </td>
-                                                        <td>@tl</td>
-                                                        <td>   @item.soluongmuon</td>
+                                                        <th style="width:100px;">Số lượng</th>
+                                                        <th style="width:100px;">Số lượng trả</th>
                                                     </tr>
-                                                    i++;
-                                                }
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <!-- /.tab-pane -->                                   
-                                </div>
-                                <!-- /.tab-content -->
-                            </div><!-- /.card-body -->
-                        }
+                                                    @if (Model.ctmuon_vmd != null)
+                                                    {
 
-                        <div class="form-group">
-                            <button style="margin-left:20px" type="submit" class="btn btn-success">Xác nhận</button>
-                        </div>
-                    </div> <!-- /.card -->
+                                                        var i = 0;
+
+                                                        foreach (var item in Model.ctmuon_vmd)
+                                                        {
+                                                            var t = item.Sach.theloais.Select(t => t.tentheloai);
+                                                            var tl = string.Join(", ", t);
+                                                            <tr class="text-center" id="trow_@item.Sach.masach">
+                                                                <td>@(i+1)</td>
+                                                                <td><img src="@item.Sach.anh" width="60" /></td>
+                                                                <td>
+                                                                    @item.Sach.tensach
+                                                                </td>
+                                                                <td>@tl</td>
+                                                                <td class="total_item">@item.soluongmuon</td>
+                                                                <td class="total_return">
+                                                                    <input type="number" class="quantity-input-return form-control" id="Quantity_@item.Sach.masach" value="@item.soluongmuon" min="0" max="@item.soluongmuon" />
+                                                                    @Html.HiddenFor(x => item.sotralai, new { id = "item_sotralai_" + item.Sach.masach })
+                                                                </td>
+                                                            </tr>
+                                                            i++;
+                                                        }
+                                                    }
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <!-- /.tab-pane -->
+                                    </div>
+                                    <!-- /.tab-content -->
+                                </div><!-- /.card-body -->
+                            }
+
+                            <div class="form-group">
+                                <button style="margin-left:20px" type="submit" class="btn btn-success">Xác nhận</button>
+                            </div>
+                        </div> <!-- /.card -->
                     }
                 </div>
             </div>
@@ -201,11 +226,60 @@
                 $('#Price').val(demoGet);
                 $('#Price').autoNumeric('set', demoGet);
             });
-            CKEDITOR.replace('txtDetail', {
-                customConfig: '/content/ckeditor/config.js',
-                extraAllowedContent: 'span',
+            //CKEDITOR.replace('txtDetail', {
+            //    customConfig: '/content/ckeditor/config.js',
+            //    extraAllowedContent: 'span',
+            //});
+
+            //function updateNumOfSachmat(somuon, sotra) {
+            //    var num_of_sachmat = parseInt(somuon) - parseInt(sotra);
+            //    alert(num_of_sachmat);
+            //    document.getElementById("p_muon_sosachmat").value = num_of_sachmat;
+            //}
+
+            //$('body').on('change', '.quantity-input-return', function (e) {
+            //    e.preventDefault();
+            //    var quantity = $(this).val();
+            //    var max = $(this).attr("max");
+            //    updateNumOfSachmat(max, quantity);
+            //});
+          $('.quantity-input-return').each(function () {
+            var quantity = $(this).val(); // Lấy giá trị từ thẻ <input>
+            var id = $(this).attr('id').split('_')[1];
+            var itemSotralai = $('#item_sotralai_' + id); // Chọn trường ẩn (hidden field) bằng ID
+
+            itemSotralai.val(quantity); // Gán giá trị cho trường ẩn (hidden field)
+            alert(itemSotralai.val());
             });
+
+
+
+
+            $('body').on('click', '.total_return', function (e) {
+                e.preventDefault();
+                var totalQuantity = 0;
+                $('.total_item').each(function () {
+                    var value = parseInt($(this).text());
+                    totalQuantity += value;
+                });
+
+                var quantity_return = 0;
+                $('.quantity-input-return').each(function () {
+                    var value = parseInt($(this).val());
+                    if (!isNaN(value)) {
+                        quantity_return += value;
+                        var id = $(this).attr('id').split('_')[1];
+                        $('#item_sotralai_' + id).val(value);
+                    }
+                });
+                var num_of_sachmat = totalQuantity - quantity_return;
+                document.getElementById("p_muon_sosachmat").value = num_of_sachmat;
+            });
+
+
         });
+
+
 
     </script>
 }

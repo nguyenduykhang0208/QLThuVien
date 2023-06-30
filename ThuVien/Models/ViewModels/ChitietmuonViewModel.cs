@@ -9,5 +9,6 @@ namespace ThuVien.Models.ViewModels
     {
         public sach Sach { get; set; }
         public int soluongmuon { get; set; }
+        public int sotralai { get; set; }
     }
 }

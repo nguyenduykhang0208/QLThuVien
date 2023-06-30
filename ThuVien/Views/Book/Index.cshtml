@@ -55,6 +55,20 @@
                                         </ul>
                                     </li>
                                 </ul>
+                                        <div class="seachbar_row">
+                                            <div class="search_item">
+                                                @using (Html.BeginForm("index", "Book", FormMethod.Get, new { }))
+                                                {
+                                                    <div class="input-group input-group-sm">
+                                                        @Html.TextBox("searchString", null, new { @class = "form-control" })
+                                                        @*<input type="text" name="searchtext" class="form-control">*@
+                                                        <span class="input-group-append">
+                                                            <button type="submit" class="btn btn-info btn-flat">Tìm kiếm</button>
+                                                        </span>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
 
 
                             </div>
@@ -87,9 +101,9 @@
                             </div>
 
                             <!-- Product Sorting -->
-
                             <div class="product_sorting_container product_sorting_container_bottom clearfix">
-                                @Html.PagedListPager(Model, page => Url.Action("Index",new { page }))
+                            Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+                                @Html.PagedListPager(Model, page => Url.Action("Index",new { page=page,cateID=ViewBag.cateID }))
                             </div>
                         </div>
                     </div>
@@ -101,4 +115,6 @@
 
 @section scripts{
     <script src="~/Content/assets/js/categories_custom.js"></script>
+    
+
 }

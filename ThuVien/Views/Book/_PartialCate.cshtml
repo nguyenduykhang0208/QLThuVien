@@ -1,19 +1,25 @@
 ﻿@model IEnumerable<ThuVien.Models.theloai>
 
-<li class="active"><a href="#">Tất cả</a></li>
 
 @if (Model != null && Model.Any())
-{
-    foreach (var item in Model)
+{<ul class="sidebar_categories">
+    <li class="cate_id @(TempData["ActiveCategory"] == null ? "active" : "")" id="0">
+        @Html.ActionLink("Tất cả", "Index", "Book", new { page = 1, cateID = (int?)null }, null)
+    </li>
+    @foreach (var item in Model)
     {
-        <ul class="sidebar_categories">
-            <li><a href="#">@item.tentheloai</a></li>
-            @*<li class="active"><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>Women</a></li>
-                <li><a href="#">Accessories</a></li>
-                <li><a href="#">New Arrivals</a></li>
-                <li><a href="#">Collection</a></li>
-                <li><a href="#">Shop</a></li>*@
-        </ul>
+        <li class="cate_id @(item.matheloai == (int?)TempData["ActiveCategory"] ? "active" : "")" id="@item.matheloai">
+            @Html.ActionLink(item.tentheloai, "Index", "Book", new { page = 1, cateID = @item.matheloai }, null)
+        </li>
+
     }
+</ul>
 
 }
+
+@*<script>
+    $(".cate_id").click(function () {
+        $(".cate_id").removeClass("active");
+        $(this).addClass("active");
+    });
+</script>*@

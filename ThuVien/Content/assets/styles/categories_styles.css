@@ -139,7 +139,11 @@ Checkout
 }
 
 .pages {
-	display: inline-block;
+
+}
+
+.seachbar_row {
+	/*	display: block;*/
 	float: right;
 }
 
@@ -254,6 +258,9 @@ Checkout
 	margin-right: 34px;
 }
 
+.search_item {
+	width: 360px;
+}
 
 /*********************************
 6. Sidebar

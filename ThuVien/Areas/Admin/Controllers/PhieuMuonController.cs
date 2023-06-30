@@ -1,4 +1,6 @@
 ﻿using Antlr.Runtime.Misc;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,7 @@ using System.Web.Mvc;
 using ThuVien.Models;
 using ThuVien.Models.ViewModels;
 using Filter = ThuVien.Models.Common.Filter;
+using System.Data.Entity.Validation;
 
 namespace ThuVien.Areas.Admin.Controllers
 {
@@ -210,7 +213,8 @@ namespace ThuVien.Areas.Admin.Controllers
                                                     select new ChitietmuonViewModel
                                                     {
                                                         Sach = s,
-                                                        soluongmuon = ct.soluong
+                                                        soluongmuon = ct.soluong,
+                                                        sotralai = ct.sotralai
                                                     }).ToList();
 
             viewModel.p_muon = db.phieumuons.Where(p => p.maphieumuon == id).FirstOrDefault();
@@ -224,31 +228,52 @@ namespace ThuVien.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult bookReturn(bookReturnViewModel temp)
         {
-            var chitietmuonList = (from ct in db.chitietmuons
-                                   join s in db.saches on ct.masach equals s.masach
-                                   where ct.maphieumuon == temp.p_muon.maphieumuon
-                                   select new ChitietmuonViewModel
-                                   {
-                                       Sach = s,
-                                       soluongmuon = ct.soluong
-                                   }).ToList();
-
             var p_muon = temp.p_muon;
             db.phieumuons.Attach(p_muon);
             p_muon.trangthaitra = true;
             db.Entry(p_muon).State = EntityState.Modified;
-
-            foreach (var chitiet in chitietmuonList)
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            var user = userManager.FindById(p_muon.userID);
+            if (user != null && p_muon.sosachmat.HasValue)
             {
-                var sach = chitiet.Sach;
-                sach.soluong += chitiet.soluongmuon;
-                db.saches.Attach(sach);
-                db.Entry(sach).State = EntityState.Modified;
+                user.matsach = p_muon.sosachmat.Value;
+                userManager.Update(user);
+            }
+            foreach (var chitiet in temp.ctmuon_vmd)
+            {
+                sach t = (sach)db.saches.Where(x => x.masach == chitiet.Sach.masach);
+
+                if (t != null)
+                {
+                    t.soluong += chitiet.soluongmuon;
+                    db.Entry(t).State = EntityState.Modified;
+                }
             }
 
-            db.SaveChanges();
+            try
+            {
+                // Existing code...
 
-            return RedirectToAction("Index");
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in entityValidationErrors.ValidationErrors)
+                    {
+                        // Log or handle each validation error here
+                        var errorMessage = $"Property: {validationError.PropertyName}, Error: {validationError.ErrorMessage}";
+                        // Example: logger.LogError(errorMessage);
+                    }
+                }
+
+                // Handle the exception or rethrow if necessary
+                throw;
+            }
+
         }
 
 

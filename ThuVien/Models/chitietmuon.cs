@@ -21,7 +21,7 @@ namespace ThuVien.Models
 
         public int soluong { get; set; }
 
-        //public int sosachmat { get; set; }
+        public int sotralai{ get; set; }
 
 
         public virtual phieumuon phieumuon { get; set; }

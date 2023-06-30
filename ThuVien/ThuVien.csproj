@@ -249,6 +249,10 @@
     <Compile Include="Migrations\202306290158288_update_2.designer.cs">
       <DependentUpon>202306290158288_update_2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202306300314293_update_quanti.cs" />
+    <Compile Include="Migrations\202306300314293_update_quanti.designer.cs">
+      <DependentUpon>202306300314293_update_quanti.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\chitietmuon.cs" />
@@ -6256,6 +6260,7 @@
     <Content Include="Views\Account\DetailOrder.cshtml" />
     <Content Include="Scripts\underscore.min.map" />
     <Content Include="Views\Book\_PartialCate.cshtml" />
+    <Content Include="Views\Book\LoadProductByCateId.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -6308,6 +6313,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202306290158288_update_2.resx">
       <DependentUpon>202306290158288_update_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306300314293_update_quanti.resx">
+      <DependentUpon>202306300314293_update_quanti.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

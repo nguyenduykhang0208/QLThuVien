@@ -1,0 +1,26 @@
+﻿@model IEnumerable<ThuVien.Models.sach>
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_responsive.css">
+<!-- Product 1 -->
+@if (Model != null && Model.Any())
+{
+    foreach (var item in Model)
+    {
+        <div class="product-item">
+            <div class="product discount product_filter">
+                <div class="product_image">
+                    <a href="/book/detail/@item.masach"><img src="@item.anh" alt="@item.tensach"></a>
+                </div>
+                <div class="favorite favorite_left"></div>
+                <div class="product_info">
+                    <h6 class="product_name"><a href="/book/detail/@item.masach">@item.tensach</a></h6>
+                    @*<div class="product_price">@ThuVien.Models.Common.Common.FormatNumber(item.giabia, 0)</div>
+                        <div style="display:none;" class="in_product_price"> @item.giabia</div>*@
+                </div>
+            </div>
+            <div class="red_button add_to_cart_button"><a href="#" class="btnAddToCart" data-id="@item.masach">Đăng kí mượn</a></div>
+        </div>
+    }
+}
+
