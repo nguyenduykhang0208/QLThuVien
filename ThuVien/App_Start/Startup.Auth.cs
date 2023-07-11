@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -74,13 +75,20 @@ namespace ThuVien
             // If you are authorized
             if (this.AuthorizeCore(filterContext.HttpContext))
             {
-                base.OnAuthorization(filterContext);
+                // Redirect to the appropriate page when authorized
+                filterContext.Result = new RedirectResult("/Admin/Home/Index");
             }
             else
             {
-                // else redirect to your Area  specific login page
-                filterContext.Result = new RedirectResult("/Admin/Account/Login");
+                // Redirect to the login page when not authorized
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary
+{
+    { "controller", "Account" },
+    { "action", "Login" },
+    { "area", "Admin" }
+});
             }
         }
     }
+
 }

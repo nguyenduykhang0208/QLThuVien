@@ -11,7 +11,7 @@ using System.Data.Entity.Infrastructure;
 
 namespace ThuVien.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
 
     public class TinTucController : Controller
     {

@@ -10,7 +10,7 @@ using Filter = ThuVien.Models.Common.Filter;
 
 namespace ThuVien.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
 
     public class TacGiaController : Controller
     {

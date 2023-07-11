@@ -11,11 +11,13 @@ using System.Web.Mvc;
 using ThuVien.Models;
 using ThuVien;
 
+
 namespace ThuVien.Areas.Admin.Controllers
 {
 
-     [Authorize(Roles = "Admin")]
-       public class AccountController : Controller
+    //[AdminAuthorize]
+
+    public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;

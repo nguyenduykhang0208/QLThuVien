@@ -218,8 +218,14 @@
             $('.auto').autoNumeric('init');
             $('#demoPrice').bind('blur focusout keypress keyup', function () {
                 var demoGet = $('#demoPrice').autoNumeric('get');
-                $('#Price').val(demoGet);
-                $('#Price').autoNumeric('set', demoGet);
+                if (!isNaN(demoGet) && demoGet >= 0) {
+                    $('#giabia').val(demoGet);
+                    $('#giabia').autoNumeric('set', demoGet);
+                } else {
+                    alert("Vui lòng nhập giá trị hợp lệ!");
+                    $("#demoPrice").val('');
+                    return;
+                }
             });
             //CKEDITOR.replace('txtDetail', {
             //    customConfig: '/content/ckeditor/config.js',
@@ -244,7 +250,7 @@
             var itemSotralai = $('#item_sotralai_' + id); // Chọn trường ẩn (hidden field) bằng ID
 
             itemSotralai.val(quantity); // Gán giá trị cho trường ẩn (hidden field)
-            alert(itemSotralai.val());
+            //alert(itemSotralai.val());
             });
 
 

@@ -70,7 +70,12 @@
     <div class="form-group">
         <div class="col-md-10">
             <a href="/cart" class="btn btn-outline-primary">Quay lại</a>
-            <button type="submit" class="btn btn-outline-success" id="btnCheckOut">Xác nhận</button>
+            @{
+                if (User.Identity.IsAuthenticated)
+                {
+                    <button type="submit" class="btn btn-outline-success" id="btnCheckOut">Xác nhận</button>
+                }
+            }
         </div>
     </div>
     @*<div class="row">

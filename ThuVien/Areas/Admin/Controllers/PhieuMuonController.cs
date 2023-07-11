@@ -18,7 +18,7 @@ using System.Data.Entity.Validation;
 
 namespace ThuVien.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
 
     public class PhieuMuonController : Controller
     {
